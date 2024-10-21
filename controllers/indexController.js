@@ -1,3 +1,5 @@
-exports.get = (req, res) => {
-  res.send("Hello App");
+const { categories } = require("../db/queries");
+
+exports.get = async (req, res) => {
+  res.render("index", { categories: await categories.getAll() });
 };

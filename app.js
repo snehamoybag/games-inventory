@@ -2,6 +2,8 @@ const path = require("node:path");
 const express = require("express");
 
 const indexRouter = require("./routes/indexRouter");
+const newRouter = require("./routes/newRouter");
+const categoryRouter = require("./routes/categoryRouter");
 
 const app = express();
 
@@ -14,6 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // routes
 app.use("/", indexRouter);
+app.use("/new", newRouter);
+app.use("/category", categoryRouter);
 
 // run server
 const HOST = process.env.HOST || "localhost";

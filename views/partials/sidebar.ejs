@@ -1,0 +1,21 @@
+<nav id="sidebar" class="sidebar">
+    <ul>
+      <li><a href="/new/game"><span>+</span> Add New Game</a></li>
+      <li><a href="/new/developer">Register A New Developer</a></li>
+    </ul>
+    <% if (locals.categories && categories.length > 0) { %>
+      <section>
+        <div>
+          <h2>Categories</h2>
+          <a href="/new/category">Add New Category</a>
+        </div>
+        <ul>
+          <% categories.forEach((category) => { %>
+            <li>
+              <a href="/category/<%= category.id %>"><%= category.name %></a>
+            </li>
+          <% }); %>
+        </ul>
+      </section>
+    <% }; %>
+</nav>
