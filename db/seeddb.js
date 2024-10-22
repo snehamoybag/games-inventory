@@ -6,24 +6,24 @@ const SQL = `
   CREATE TABLE IF NOT EXISTS games (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(255),
-    logo_url TEXT,
-    coverimg_url TEXT,
-    details TEXT,
+    logo_url VARCHAR(255),
+    coverimg_url VARCHAR(255),
+    details VARCHAR(2000),
     price DECIMAL
   );
   
   CREATE TABLE IF NOT EXISTS developers (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(255),
-    logo_url TEXT,
-    coverimg_url TEXT,
-    details TEXT
+    logo_url VARCHAR(255),
+    coverimg_url VARCHAR(255),
+    details VARCHAR(2000) 
   );
 
   CREATE TABLE IF NOT EXISTS categories (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(255),
-    thumbnail_url TEXT
+    thumbnail_url VARCHAR(255) 
   );
 
   CREATE TABLE IF NOT EXISTS games_developers (
