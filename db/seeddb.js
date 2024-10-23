@@ -23,7 +23,7 @@ const SQL = `
   CREATE TABLE IF NOT EXISTS categories (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(255),
-    thumbnail_url VARCHAR(255) 
+    icon_url VARCHAR(255) 
   );
 
   CREATE TABLE IF NOT EXISTS games_developers (
