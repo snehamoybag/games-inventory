@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add New Category</title>
+  </head>
+  <body>
+    <%- include ("./partials/header.ejs") %>
+    <main>
+      <section>
+        <h2>Add New Category</h2>
+
+        <form id="new-category-form" action="/new/category" method="POST">
+          <p>
+            <label for="category-name">Category Name: </label>
+            <input type="text" id="category-name" name="categoryName" placeholder="Rockstar Games ..." required>
+          </p>
+          <p>
+            <label for="category-icon-url">Category Icon Url: </label>
+            <input type="text" id="category-icon-url" name="categoryIconUrl" placeholder="https://imghost.com/icon.png ...">
+          </p>
+          <button type="submit">Add Category</button>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

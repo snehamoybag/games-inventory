@@ -8,7 +8,10 @@ const router = new Router();
 router.get("/game", newGameController.GET);
 router.post("/game", newGameController.POST);
 
-router.get("/developer", newDeveloperController.get);
-router.get("/category", newCategoryController.get);
+router.get("/developer", newDeveloperController.GET);
+router.post("/developer", newDeveloperController.POST);
+
+router.get("/category", newCategoryController.GET);
+router.post("/category", newCategoryController.POST);
 
 module.exports = router;
