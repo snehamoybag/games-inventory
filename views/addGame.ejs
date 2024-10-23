@@ -1,51 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Add New Game</title>
-  </head>
-  <body>
-    <%- include("./partials/header.ejs") %>
-    <main>
-      <section>
-        <h2>Add New Game</h2>
-          <form action="/new/game" method="POST" id="new-game-form">
-            <p>
-              <label for="game-name">Name: </label>
-              <input type="text" id="game-name" name="gameName" placeholder="Grand Theft Auto VI ..." required>
-            </p>
-            <p>
-              <label for="logo-url">Logo Url: </label>
-              <input type="text" id="logo-url" name="gameLogoUrl" placeholder="https://imghost.com/game-logo.jpg ..." required>
-            </p>
-            <p>
-              <label for="coverimg-url">Cover Image Url: </label>
-              <input type="text" id="coverimg-url" name="gameCoverImgUrl" placeholder="https://imghost.com/game-cover.jpg ...">
-            </p>
-            <p>
-              <label for="game-developers">Developers (separated by commas): </label>
-              <input type="text" id="game-developers" name="gameDevelopers" placeholder="Rockstar Games, Rockstar North ..." required>
-            </p>
-            <p>
-              <label for="game-categories">Categories (separated by commas): </label>
-              <input type="text" id="game-categories" name="gameCategories" placeholder="Action, Fighting ..." required>
-            </p>
-            <!-- <p> -->
-            <!--   <label for="game-platforms">Platforms (separated by commas): </label> -->
-            <!--   <input type="text" id="game-platforms" name="gamePlatforms" placeholder="PC, Console, Android ..." required> -->
-            <!-- </p> -->
-            <p>
-              <label for="game-details">Details :</label>
-              <textarea id="game-details" name="gameDetails" placeholder="This game is awesome ..." required></textarea>
-            </p>
-            <p>
-              <label for="game-price">Price (Dollars USA): </label>
-              <input type="number" id="game-price" name="gamePrice" placeholder="3.99" required>
-            </p>
-            <button type="submit">Add Game</button>
-          </form>
-      </section>
-    </main>
-  </body>
-</html>
+<section>
+  <h2>Add New Game</h2>
+  <form action="/new/game" method="POST" id="new-game-form">
+    <p>
+      <label for="game-name">Name: </label>
+      <input type="text" id="game-name" name="gameName" placeholder="Grand Theft Auto VI ..." required>
+    </p>
+    <p>
+      <label for="logo-url">Logo Url: </label>
+      <input type="text" id="logo-url" name="gameLogoUrl" placeholder="https://imghost.com/game-logo.jpg ..." required>
+    </p>
+    <p>
+      <label for="coverimg-url">Cover Image Url: </label>
+      <input type="text" id="coverimg-url" name="gameCoverImgUrl" placeholder="https://imghost.com/game-cover.jpg ...">
+    </p>
+    <p>
+      <label for="game-developers">Developers (separated by commas): </label>
+      <input type="text" id="game-developers" name="gameDevelopers" placeholder="Rockstar Games, Rockstar North ..." required>
+    </p>
+    <p>
+      <label for="game-categories">Categories (separated by commas): </label>
+      <input type="text" id="game-categories" name="gameCategories" placeholder="Action, Fighting ..." required>
+    </p>
+    <!-- <p> -->
+    <!--   <label for="game-platforms">Platforms (separated by commas): </label> -->
+    <!--   <input type="text" id="game-platforms" name="gamePlatforms" placeholder="PC, Console, Android ..." required> -->
+    <!-- </p> -->
+    <p>
+      <label for="game-details">Details :</label>
+      <textarea id="game-details" name="gameDetails" placeholder="This game is awesome ..." required></textarea>
+    </p>
+    <p>
+      <label for="game-price">Price (Dollars USA): </label>
+      <input type="number" id="game-price" name="gamePrice" placeholder="3.99" required>
+    </p>
+    <button type="submit">Add Game</button>
+  </form>
+</section>

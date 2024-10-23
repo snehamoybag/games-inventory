@@ -1,4 +1,5 @@
 const { body, validationResult } = require("express-validator");
+const { categories } = require("../db/queries");
 
 const validateFormFileds = [
   body("developerName")
@@ -23,13 +24,19 @@ const validateFormFileds = [
     .withMessage("Details must be between 30 and 2000 characters."),
 ];
 
-exports.GET = (req, res) => {
-  res.render("addDeveloper", {});
+const getViewData = async () => ({
+  title: "Resgister New Developer",
+  mainView: "addDeveloper",
+  categories: await categories.getAll(),
+});
+
+exports.GET = async (req, res) => {
+  res.render("root", await getViewData());
 };
 
 exports.POST = [
   validateFormFileds,
-  (req, res) => {
+  async (req, res) => {
     const errors = validationResult(req);
 
     if (errors.isEmpty()) {
@@ -37,6 +44,7 @@ exports.POST = [
       return;
     }
 
-    res.status(400).render("addDeveloper", { errors: errors.array() });
+    const viewData = await getViewData();
+    res.status(400).render("root", { ...viewData, errors: errors.array() });
   },
 ];

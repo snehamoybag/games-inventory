@@ -1,36 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Add New Developer</title>
-  </head>
-  <body>
-    <%- include ("./partials/header.ejs") %>
-    <main>
-      <section>
-        <h2>Register New Developer</h2>
+<section>
+  <h2>Register New Developer</h2>
 
-        <form id="new-developer-form" action="/new/developer" method="POST">
-          <p>
-            <label for="developer-name">Developer Name: </label>
-            <input type="text" id="devevloper-name" name="developerName" placeholder="Rockstar Games ..." required>
-          </p>
-          <p>
-            <label for="developer-logo-url">Logo Url: </label>
-            <input type="text" id="developer-logo-url" name="developerLogoUrl" placeholder="https://imghost.com/dev-logo.jpg ...">
-          </p>
-          <p>
-            <label for="developer-coverimg-url">Cover Image Url</label>
-            <input type="text" id="developer-coverimg-url" name="developerCoverImgUrl" placeholder="https://imghost.com/dev-cover.jpg ...">
-          </p>
-          <p>
-            <label for="developer-details">Details: </label>
-            <textarea id="developer-details" name="developerDetails" placeholder="We are the best AAA game developer in the world! ..." required></textarea>
-          </p>
-          <button type="submit">Add Developer</button>
-        </form>
-      </section>
-    </main>
-  </body>
-</html>
+  <form id="new-developer-form" action="/new/developer" method="POST">
+    <p>
+      <label for="developer-name">Developer Name: </label>
+      <input type="text" id="devevloper-name" name="developerName" placeholder="Rockstar Games ..." required>
+    </p>
+    <p>
+      <label for="developer-logo-url">Logo Url: </label>
+      <input type="text" id="developer-logo-url" name="developerLogoUrl" placeholder="https://imghost.com/dev-logo.jpg ...">
+    </p>
+    <p>
+      <label for="developer-coverimg-url">Cover Image Url</label>
+      <input type="text" id="developer-coverimg-url" name="developerCoverImgUrl" placeholder="https://imghost.com/dev-cover.jpg ...">
+    </p>
+    <p>
+      <label for="developer-details">Details: </label>
+      <textarea id="developer-details" name="developerDetails" placeholder="We are the best AAA game developer in the world! ..." required></textarea>
+    </p>
+    <button type="submit">Add Developer</button>
+  </form>
+</section>

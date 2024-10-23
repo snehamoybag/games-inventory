@@ -1,4 +1,5 @@
 const { body, validationResult } = require("express-validator");
+const { categories } = require("../db/queries");
 
 const validateFormFields = [
   body("gameName")
@@ -40,13 +41,19 @@ const validateFormFields = [
     .withMessage("Price must be number or decimal."),
 ];
 
-exports.GET = (req, res) => {
-  res.render("addGame", {});
+const getViewData = async () => ({
+  title: "Add New Game",
+  mainView: "addGame",
+  categories: await categories.getAll(),
+});
+
+exports.GET = async (req, res) => {
+  res.render("root", await getViewData());
 };
 
 exports.POST = [
   validateFormFields,
-  (req, res) => {
+  async (req, res) => {
     const errors = validationResult(req);
 
     // if no errors
@@ -56,6 +63,7 @@ exports.POST = [
     }
 
     // if errors
-    res.status(400).render("addGame", { errors: errors.array() });
+    const viewData = await getViewData();
+    res.status(400).render("root", { ...viewData, errors: errors.array() });
   },
 ];

@@ -1,4 +1,5 @@
 const { body, validationResult } = require("express-validator");
+const { categories } = require("../db/queries");
 
 const validateFormFields = [
   body("categoryName")
@@ -13,14 +14,19 @@ const validateFormFields = [
     .withMessage("Icon url must be between 1 and 255 characters."),
 ];
 
-exports.GET = (req, res) => {
-  res.render("addCategory", {});
+const getViewData = async () => ({
+  title: "Add New Category",
+  mainView: "addCategory",
+  categories: await categories.getAll(),
+});
+
+exports.GET = async (req, res) => {
+  res.render("root", await getViewData());
 };
 
 exports.POST = [
   validateFormFields,
-  (req, res) => {
-    console.log("category post");
+  async (req, res) => {
     const errors = validationResult(req);
 
     if (errors.isEmpty()) {
@@ -28,6 +34,7 @@ exports.POST = [
       return;
     }
 
-    res.status(400).render("addCategory", { errors: errors.array() });
+    const viewData = await getViewData();
+    res.status(400).render("root", { ...viewData, errors: errors.array() });
   },
 ];
