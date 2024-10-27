@@ -5,7 +5,7 @@ const { Client } = require("pg");
 const SQL = `
   CREATE TABLE IF NOT EXISTS games (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    name VARCHAR(255),
+    name VARCHAR(255) UNIQUE,
     logo_url VARCHAR(255),
     coverimg_url VARCHAR(255),
     details VARCHAR(2000),
@@ -14,7 +14,7 @@ const SQL = `
   
   CREATE TABLE IF NOT EXISTS developers (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    name VARCHAR(255),
+    name VARCHAR(255) UNIQUE,
     logo_url VARCHAR(255),
     coverimg_url VARCHAR(255),
     details VARCHAR(2000) 
@@ -22,7 +22,7 @@ const SQL = `
 
   CREATE TABLE IF NOT EXISTS categories (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    name VARCHAR(255),
+    name VARCHAR(255) UNIQUE,
     icon_url VARCHAR(255) 
   );
 
@@ -53,7 +53,7 @@ const SQL = `
     ('Simulation'),
     ('Role Playing'),
     ('Single Player'),
-    ('Multi-Player'),
+    ('Multi-Player')
 `;
 
 const main = async () => {
