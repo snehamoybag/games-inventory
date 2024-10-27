@@ -1,5 +1,5 @@
 const { body, validationResult } = require("express-validator");
-const { categories } = require("../db/queries");
+const { categories, developers } = require("../db/queries");
 
 const validateFormFileds = [
   body("developerName")
@@ -39,12 +39,33 @@ exports.POST = [
   async (req, res) => {
     const errors = validationResult(req);
 
-    if (errors.isEmpty()) {
-      res.redirect("/");
+    if (!errors.isEmpty()) {
+      const viewData = await getViewData();
+      res.status(400).render("root", { ...viewData, errors: errors.array() });
       return;
     }
 
-    const viewData = await getViewData();
-    res.status(400).render("root", { ...viewData, errors: errors.array() });
+    const {
+      developerName,
+      developerDetails,
+      developerLogoUrl,
+      developerCoverImgUrl,
+    } = req.body;
+
+    if (await developers.isNameTaken(developerName)) {
+      res
+        .status(400)
+        .send("Developer name already taken. Please try a different one.");
+      return;
+    }
+
+    await developers.add(
+      developerName,
+      developerDetails,
+      developerLogoUrl,
+      developerCoverImgUrl,
+    );
+
+    res.redirect("/");
   },
 ];

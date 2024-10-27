@@ -29,12 +29,19 @@ exports.POST = [
   async (req, res) => {
     const errors = validationResult(req);
 
-    if (errors.isEmpty()) {
-      res.redirect("/");
+    if (!errors.isEmpty()) {
+      const viewData = await getViewData();
+      res.status(400).render("root", { ...viewData, errors: errors.array() });
       return;
     }
 
-    const viewData = await getViewData();
-    res.status(400).render("root", { ...viewData, errors: errors.array() });
+    const { categoryName, categoryIconUrl } = req.body;
+
+    if (categories.isNameTaken(categoryName)) {
+      res.status(400).send("Category already exists. Please enter a new one.");
+      return;
+    }
+
+    await categories.add(categoryName, categoryIconUrl);
   },
 ];

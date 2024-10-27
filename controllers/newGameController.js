@@ -1,5 +1,5 @@
 const { body, validationResult } = require("express-validator");
-const { categories } = require("../db/queries");
+const { games, categories } = require("../db/queries");
 
 const validateFormFields = [
   body("gameName")
@@ -56,14 +56,38 @@ exports.POST = [
   async (req, res) => {
     const errors = validationResult(req);
 
-    // if no errors
-    if (errors.isEmpty()) {
-      res.redirect("/");
+    // if validation error
+    if (!errors.isEmpty()) {
+      const viewData = await getViewData();
+      res.status(400).render("root", { ...viewData, errors: errors.array() });
       return;
     }
 
-    // if errors
-    const viewData = await getViewData();
-    res.status(400).render("root", { ...viewData, errors: errors.array() });
+    const { gameName, gameLogoUrl, gameCoverImgUrl, gameDetails, gamePrice } =
+      req.body;
+
+    const gameDeveloperIds = req.body.gameDevelopers.split(",");
+    const gameCategoryIds = req.body.gameCategories.split(",");
+
+    if (await games.isNameTaken(req.body.gameName)) {
+      res
+        .status(400)
+        .send(
+          "Another Game with same name already exists. Please try a different name.",
+        );
+      return;
+    }
+
+    await games.add(
+      gameName,
+      gameLogoUrl,
+      gameCoverImgUrl,
+      gameDetails,
+      gamePrice,
+      gameDeveloperIds,
+      gameCategoryIds,
+    );
+
+    res.redirect("/");
   },
 ];
