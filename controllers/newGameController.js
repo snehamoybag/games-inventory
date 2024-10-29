@@ -1,5 +1,5 @@
 const { body, validationResult } = require("express-validator");
-const { games, categories } = require("../db/queries");
+const { games, categories, developers } = require("../db/queries");
 
 const validateFormFields = [
   body("gameName")
@@ -45,6 +45,7 @@ const getViewData = async () => ({
   title: "Add New Game",
   mainView: "addGame",
   categories: await categories.getAll(),
+  developers: await developers.getAll(),
 });
 
 exports.GET = async (req, res) => {
@@ -63,11 +64,15 @@ exports.POST = [
       return;
     }
 
-    const { gameName, gameLogoUrl, gameCoverImgUrl, gameDetails, gamePrice } =
-      req.body;
-
-    const gameDeveloperIds = req.body.gameDevelopers.split(",");
-    const gameCategoryIds = req.body.gameCategories.split(",");
+    const {
+      gameName,
+      gameLogoUrl,
+      gameCoverImgUrl,
+      gameDetails,
+      gamePrice,
+      gameCategories,
+      gameDevelopers,
+    } = req.body;
 
     if (await games.isNameTaken(req.body.gameName)) {
       res
@@ -84,8 +89,8 @@ exports.POST = [
       gameCoverImgUrl,
       gameDetails,
       gamePrice,
-      gameDeveloperIds,
-      gameCategoryIds,
+      [...gameDevelopers], // to make sure we always dealing with an array
+      [...gameCategories],
     );
 
     res.redirect("/");

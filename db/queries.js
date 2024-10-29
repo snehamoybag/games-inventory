@@ -22,7 +22,7 @@ class Games {
     developerIds,
     categoryIds,
   ) {
-    const addTOGamesQuery = `INSERT INTO games (name, logoUrl, coverImgUrl, details, price) 
+    const addTOGamesQuery = `INSERT INTO games (name, logo_url, coverimg_url, details, price) 
       VALUES($1, $2, $3, $4, $5) RETURNING id`; // returns modified rows id
 
     const gameId = await pool
@@ -36,13 +36,13 @@ class Games {
       .then(({ rows }) => rows[0].id);
 
     developerIds.forEach(async (devId) => {
-      const query = `INSERT INTO games_developers (game_id, developer_id) VALUES (${gameId}, $1)`;
-      await pool.query(query, [Number(devId)]);
+      const query = `INSERT INTO games_developers (game_id, developer_id) VALUES ($1, $2)`;
+      await pool.query(query, [Number(gameId), Number(devId)]);
     });
 
     categoryIds.forEach(async (categoryId) => {
-      const query = `INSERT INTO games_categories (game_id, category_id) VALUES (${categoryId}, $1)`;
-      await pool.query(query, [Number(categoryId)]);
+      const query = `INSERT INTO games_categories (game_id, category_id) VALUES ($1, $2)`;
+      await pool.query(query, [Number(gameId), Number(categoryId)]);
     });
   }
 }

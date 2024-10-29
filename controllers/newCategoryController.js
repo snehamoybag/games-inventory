@@ -10,7 +10,7 @@ const validateFormFields = [
   body("categoryIconUrl")
     .optional()
     .trim()
-    .isLength({ min: 1, max: 255 })
+    .isLength({ max: 255 })
     .withMessage("Icon url must be between 1 and 255 characters."),
 ];
 
@@ -37,11 +37,12 @@ exports.POST = [
 
     const { categoryName, categoryIconUrl } = req.body;
 
-    if (categories.isNameTaken(categoryName)) {
+    if (await categories.isNameTaken(categoryName)) {
       res.status(400).send("Category already exists. Please enter a new one.");
       return;
     }
 
     await categories.add(categoryName, categoryIconUrl);
+    res.redirect("/");
   },
 ];

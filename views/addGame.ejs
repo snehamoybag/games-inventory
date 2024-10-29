@@ -14,12 +14,32 @@
       <input type="text" id="coverimg-url" name="gameCoverImgUrl" placeholder="https://imghost.com/game-cover.jpg ...">
     </p>
     <p>
-      <label for="game-developers">Developers (separated by commas): </label>
-      <input type="text" id="game-developers" name="gameDevelopers" placeholder="Rockstar Games, Rockstar North ..." required>
+      <label for="game-developers">Developers : (Can't find one? Register a new one <a href="/new/developer">here.</a>)</label>
+      <select id="game-developers" name="gameDevelopers" multiple required>
+        <% if (locals.developers && developers.length > 0) { %>
+          <option value="" disabled>-- You can choose multiple --</option>
+          <hr />
+          <% developers.forEach((developer) => { %>
+            <option value=<%= developer.id %>><%= developer.name %></option>
+          <% }); %>
+        <% } else { %>
+          <option value="" disabled>no developer found</option>
+        <% }; %>
+      </select>
     </p>
     <p>
-      <label for="game-categories">Categories (separated by commas): </label>
-      <input type="text" id="game-categories" name="gameCategories" placeholder="Action, Fighting ..." required>
+      <label for="game-categories">Categories: (Of different category? Create a new one <a href="/new/category">here.</a>)</label>
+      <select id="game-categories" name="gameCategories" multiple required>
+        <% if (locals.categories && categories.length > 0) { %>
+          <option value="" disabled>-- You can choose multiple --</option>
+          <hr />
+          <% categories.forEach((category) => { %>
+            <option value=<%= category.id %>><%= category.name %></option>
+          <% }); %>
+        <% } else { %>
+          <option value="" disabled>no developer found</option>
+        <% }; %>
+      </select>
     </p>
     <!-- <p> -->
     <!--   <label for="game-platforms">Platforms (separated by commas): </label> -->
@@ -31,7 +51,7 @@
     </p>
     <p>
       <label for="game-price">Price (Dollars USA): </label>
-      <input type="number" id="game-price" name="gamePrice" placeholder="3.99" required>
+      <input type="text" id="game-price" name="gamePrice" placeholder="3.99" required>
     </p>
     <button type="submit">Add Game</button>
   </form>
