@@ -1,5 +1,6 @@
 const { body, validationResult } = require("express-validator");
 const { categories, developers } = require("../db/queries");
+const { parseValidationErrors } = require("../utils/parseValidationErrors");
 
 const validateFormFileds = [
   body("developerName")
@@ -41,7 +42,9 @@ exports.POST = [
 
     if (!errors.isEmpty()) {
       const viewData = await getViewData();
-      res.status(400).render("root", { ...viewData, errors: errors.array() });
+      const parsedErrors = parseValidationErrors(errors.array());
+
+      res.status(400).render("root", { ...viewData, errors: parsedErrors });
       return;
     }
 

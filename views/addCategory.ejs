@@ -4,11 +4,17 @@
   <form id="new-category-form" action="/new/category" method="POST">
     <p>
       <label for="category-name">Category Name: </label>
-      <input type="text" id="category-name" name="categoryName" placeholder="Rockstar Games ..." required>
+      <% if (locals.errors && erros.categoryName) {
+        <label for="category-name"><%= errors.categoryName %></label>
+      <% };%>
+      <input type="text" id="category-name" name="categoryName" placeholder="Rockstar Games ..." required />
     </p>
     <p>
       <label for="category-icon-url">Category Icon Url: </label>
-      <input type="text" id="category-icon-url" name="categoryIconUrl" placeholder="https://imghost.com/icon.png ...">
+      <% if (locals.errors && erros.categoryIconUrl) {
+        <label for="category-icon-url"><%= errors.categoryIconUrl %></label>
+      <% };%>
+      <input type="text" id="category-icon-url" name="categoryIconUrl" placeholder="https://imghost.com/icon.png ..." />
     </p>
     <button type="submit">Add Category</button>
   </form>

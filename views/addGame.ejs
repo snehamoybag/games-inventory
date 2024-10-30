@@ -3,18 +3,30 @@
   <form action="/new/game" method="POST" id="new-game-form">
     <p>
       <label for="game-name">Name: </label>
+      <% if (locals.errors && errors.gameName) { %>
+        <label for="game-name" class="error-msg">Error: <%= errors.gameName %></label>
+      <% }; %>
       <input type="text" id="game-name" name="gameName" placeholder="Grand Theft Auto VI ..." required>
     </p>
     <p>
-      <label for="logo-url">Logo Url: </label>
-      <input type="text" id="logo-url" name="gameLogoUrl" placeholder="https://imghost.com/game-logo.jpg ..." required>
+      <label for="game-logo-url">Logo Url: </label>
+      <% if (locals.errors && errors.gameLogoUrl) { %>
+        <label for="game-logo-url" class="error-msg">Error: <%= errors.gameLogoUrl %></label>
+      <% }; %>
+      <input type="text" id="game-logo-url" name="gameLogoUrl" placeholder="https://imghost.com/game-logo.jpg ..." required />
     </p>
     <p>
-      <label for="coverimg-url">Cover Image Url: </label>
-      <input type="text" id="coverimg-url" name="gameCoverImgUrl" placeholder="https://imghost.com/game-cover.jpg ...">
+      <label for="game-coverimg-url">Cover Image Url: </label>
+      <% if (locals.errors && errors.gameCoverImgUrl) { %>
+        <label for="game-coverimg-url" class="error-msg">Error: <%= errors.gameCoverImgUrl %></label>
+      <% }; %>
+      <input type="text" id="game-coverimg-url" name="gameCoverImgUrl" placeholder="https://imghost.com/game-cover.jpg ..." />
     </p>
     <p>
       <label for="game-developers">Developers : (Can't find one? Register a new one <a href="/new/developer">here.</a>)</label>
+      <% if (locals.errors && errors.gameDevelopers) { %>
+        <label for="game-developers" class="error-msg">Error: <%= errors.gameDevelopers %></label>
+      <% }; %>
       <select id="game-developers" name="gameDevelopers" multiple required>
         <% if (locals.developers && developers.length > 0) { %>
           <option value="" disabled>-- You can choose multiple --</option>
@@ -29,6 +41,9 @@
     </p>
     <p>
       <label for="game-categories">Categories: (Of different category? Create a new one <a href="/new/category">here.</a>)</label>
+      <% if (locals.errors && errors.gameCategories) { %>
+        <label for="game-categories" class="error-msg">Error: <%= errors.gameCategories %></label>
+      <% }; %>
       <select id="game-categories" name="gameCategories" multiple required>
         <% if (locals.categories && categories.length > 0) { %>
           <option value="" disabled>-- You can choose multiple --</option>
@@ -47,11 +62,17 @@
     <!-- </p> -->
     <p>
       <label for="game-details">Details :</label>
+      <% if (locals.errors && errors.gameDetails) { %>
+        <label for="game-details" class="error-msg">Error: <%= errors.gameDetails %></label>
+      <% }; %>
       <textarea id="game-details" name="gameDetails" placeholder="This game is awesome ..." required></textarea>
     </p>
     <p>
       <label for="game-price">Price (Dollars USA): </label>
-      <input type="text" id="game-price" name="gamePrice" placeholder="3.99" required>
+      <% if (locals.errors && errors.gamePrice) { %>
+        <label for="game-price" class="error-msg">Error: <%= errors.gamePrice %></label>
+      <% }; %>
+      <input type="text" id="game-price" name="gamePrice" placeholder="3.99" required />
     </p>
     <button type="submit">Add Game</button>
   </form>

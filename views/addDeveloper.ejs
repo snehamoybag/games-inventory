@@ -4,18 +4,30 @@
   <form id="new-developer-form" action="/new/developer" method="POST">
     <p>
       <label for="developer-name">Developer Name: </label>
-      <input type="text" id="devevloper-name" name="developerName" placeholder="Rockstar Games ..." required>
+      <% if (locals.errors && errors.developerName) { %>
+        <label for="developer-name"><%= errors.developerName %></label>
+      <% };%>
+      <input type="text" id="devevloper-name" name="developerName" placeholder="Rockstar Games ..." required />
     </p>
     <p>
       <label for="developer-logo-url">Logo Url: </label>
-      <input type="text" id="developer-logo-url" name="developerLogoUrl" placeholder="https://imghost.com/dev-logo.jpg ...">
+      <% if (locals.errors && errors.developerLogoUrl) { %>
+        <label for="developer-logo-url"><%= errors.developerLogoUrl %></label>
+      <% };%>
+      <input type="text" id="developer-logo-url" name="developerLogoUrl" placeholder="https://imghost.com/dev-logo.jpg ..." />
     </p>
     <p>
       <label for="developer-coverimg-url">Cover Image Url</label>
+      <% if (locals.errors && errors.developerCoverImgUrl) { %>
+        <label for="developer-coverimg-url"><%= errors.developerCoverImgUrl %></label>
+      <% };%>
       <input type="text" id="developer-coverimg-url" name="developerCoverImgUrl" placeholder="https://imghost.com/dev-cover.jpg ...">
     </p>
     <p>
       <label for="developer-details">Details: </label>
+      <% if (locals.errors && errors.developerDetails) { %>
+        <label for="developer-details"><%= errors.developerDetails %></label>
+      <% };%>
       <textarea id="developer-details" name="developerDetails" placeholder="We are the best AAA game developer in the world! ..." required></textarea>
     </p>
     <button type="submit">Add Developer</button>

@@ -1,5 +1,6 @@
 const { body, validationResult } = require("express-validator");
 const { games, categories, developers } = require("../db/queries");
+const { parseValidationErrors } = require("../utils/parseValidationErrors");
 
 const validateFormFields = [
   body("gameName")
@@ -60,7 +61,9 @@ exports.POST = [
     // if validation error
     if (!errors.isEmpty()) {
       const viewData = await getViewData();
-      res.status(400).render("root", { ...viewData, errors: errors.array() });
+      const parsedErrors = parseValidationErrors(errors.array());
+
+      res.status(400).render("root", { ...viewData, errors: parsedErrors });
       return;
     }
 
