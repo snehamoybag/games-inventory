@@ -2,11 +2,18 @@ const { body, validationResult } = require("express-validator");
 const { categories, developers } = require("../db/queries");
 const { parseValidationErrors } = require("../utils/parseValidationErrors");
 
+const validateDeveloperName = async (value) => {
+  if (await developers.isNameTaken(value)) {
+    return Promise.reject("Developer already exists, please enter a new one.");
+  }
+};
+
 const validateFormFileds = [
   body("developerName")
     .trim()
     .isLength({ min: 1, max: 255 })
-    .withMessage("Developer name must be between 1 and 255 characters."),
+    .withMessage("Developer name must be between 1 and 255 characters.")
+    .custom(validateDeveloperName),
 
   body("developerLogoUrl")
     .trim()
@@ -54,13 +61,6 @@ exports.POST = [
       developerLogoUrl,
       developerCoverImgUrl,
     } = req.body;
-
-    if (await developers.isNameTaken(developerName)) {
-      res
-        .status(400)
-        .send("Developer name already taken. Please try a different one.");
-      return;
-    }
 
     await developers.add(
       developerName,

@@ -2,11 +2,20 @@ const { body, validationResult } = require("express-validator");
 const { games, categories, developers } = require("../db/queries");
 const { parseValidationErrors } = require("../utils/parseValidationErrors");
 
+const validateGameName = async (value) => {
+  if (await games.isNameTaken(value)) {
+    return Promise.reject(
+      "Game name is already taken, Please try a different name.",
+    );
+  }
+};
+
 const validateFormFields = [
   body("gameName")
     .trim()
     .isLength({ min: 1, max: 255 })
-    .withMessage("Game name must be between 1 and 255 characters."),
+    .withMessage("Game name must be between 1 and 255 characters.")
+    .custom(validateGameName),
 
   body("gameDevelopers")
     .trim()
@@ -76,15 +85,6 @@ exports.POST = [
       gameCategories,
       gameDevelopers,
     } = req.body;
-
-    if (await games.isNameTaken(req.body.gameName)) {
-      res
-        .status(400)
-        .send(
-          "Another Game with same name already exists. Please try a different name.",
-        );
-      return;
-    }
 
     await games.add(
       gameName,
