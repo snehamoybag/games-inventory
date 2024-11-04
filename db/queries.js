@@ -75,7 +75,7 @@ class Categories {
   async get(categoryId) {
     const query = "SELECT * FROM categories WHERE id = $1";
     const { rows } = await pool.query(query, [Number(categoryId)]);
-    return rows;
+    return rows[0];
   }
 
   async getAll() {
@@ -111,6 +111,17 @@ class Categories {
     await pool.query("DELETE FROM categories WHERE id = $1", [
       Number(categoryId),
     ]);
+  }
+
+  async edit(categoryId, name, iconUrl = "") {
+    const query = `
+      UPDATE categories 
+      SET name = $2,
+      icon_url = $3
+      WHERE id = $1
+    `;
+
+    await pool.query(query, [categoryId, name, iconUrl]);
   }
 }
 
