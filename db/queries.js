@@ -7,7 +7,7 @@ class Games {
   }
 
   async isNameTaken(name) {
-    const query = "SELECT name FROM games WHERE name ILIKE $1";
+    const query = "SELECT 1 FROM games WHERE name ILIKE $1";
     const { rows } = await pool.query(query, [name]);
 
     return rows.length > 0;
@@ -57,7 +57,7 @@ class Developers {
   }
 
   async isNameTaken(name) {
-    const query = "SELECT name FROM developers WHERE name ILIKE $1";
+    const query = "SELECT 1 FROM developers WHERE name ILIKE $1";
     const { rows } = await pool.query(query, [name]);
 
     return rows.length > 0;
@@ -72,6 +72,12 @@ class Developers {
 }
 
 class Categories {
+  async get(categoryId) {
+    const query = "SELECT * FROM categories WHERE id = $1";
+    const { rows } = await pool.query(query, [Number(categoryId)]);
+    return rows;
+  }
+
   async getAll() {
     const { rows } = await pool.query(
       "SELECT * FROM categories ORDER BY name ASC",
@@ -79,8 +85,14 @@ class Categories {
     return rows;
   }
 
+  async isValid(categoryId) {
+    const query = "SELECT 1 FROM categories WHERE id = $1";
+    const { rows } = await pool.query(query, [Number(categoryId)]);
+    return rows.length > 0;
+  }
+
   async isNameTaken(name) {
-    const query = "SELECT name FROM categories WHERE name ILIKE $1";
+    const query = "SELECT 1 FROM categories WHERE name ILIKE $1";
     const { rows } = await pool.query(query, [name]);
 
     return rows.length > 0;
@@ -89,6 +101,16 @@ class Categories {
   async add(name, iconUrl) {
     const query = "INSERT INTO categories (name, icon_url) VALUES ($1, $2)";
     await pool.query(query, [name, iconUrl]);
+  }
+
+  async delete(categoryId) {
+    await pool.query("DELETE FROM games_categories WHERE category_id = $1", [
+      Number(categoryId),
+    ]);
+
+    await pool.query("DELETE FROM categories WHERE id = $1", [
+      Number(categoryId),
+    ]);
   }
 }
 
