@@ -1,6 +1,12 @@
 const pool = require("./pool");
 
 class Games {
+  async getGame(gameId) {
+    const query = "SELECT * FROM games WHERE id = $1";
+    const { rows } = await pool.query(query, [Number(gameId)]);
+    return rows[0];
+  }
+
   async getAll() {
     const { rows } = await pool.query("SELECT * FROM games ORDER BY name ASC");
     return rows;
@@ -72,7 +78,7 @@ class Developers {
 }
 
 class Categories {
-  async get(categoryId) {
+  async getCategory(categoryId) {
     const query = "SELECT * FROM categories WHERE id = $1";
     const { rows } = await pool.query(query, [Number(categoryId)]);
     return rows[0];

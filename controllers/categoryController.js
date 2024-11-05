@@ -25,7 +25,7 @@ const validateFormFields = [
 const getViewData = async (categoryId) => ({
   title: "Edit Category",
   mainView: "addCategory",
-  fieldValues: await categories.get(categoryId),
+  fieldValues: await categories.getCategory(categoryId),
 });
 
 exports.GET = (req, res) => {
