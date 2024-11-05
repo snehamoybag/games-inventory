@@ -22,14 +22,13 @@ const validateFormFields = [
     .withMessage("Icon url must be between 1 and 255 characters."),
 ];
 
-const getViewData = async () => ({
+const viewData = {
   title: "Add New Category",
   mainView: "addCategory",
-  categories: await categories.getAll(),
-});
+};
 
-exports.GET = async (req, res) => {
-  res.render("root", await getViewData());
+exports.GET = (req, res) => {
+  res.render("root", viewData);
 };
 
 exports.POST = [
@@ -38,7 +37,6 @@ exports.POST = [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      const viewData = await getViewData();
       const parsedErrors = parseValidationErrors(errors.array());
 
       res.status(400).render("root", { ...viewData, errors: parsedErrors });

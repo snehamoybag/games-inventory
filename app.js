@@ -4,6 +4,7 @@ const express = require("express");
 const indexRouter = require("./routes/indexRouter");
 const newRouter = require("./routes/newRouter");
 const categoryRouter = require("./routes/categoryRouter");
+const { categories } = require("./db/queries");
 
 const app = express();
 
@@ -13,6 +14,12 @@ app.set("view engine", "ejs");
 
 // parse req.body
 app.use(express.urlencoded({ extended: true }));
+
+// global variables available to views
+app.use(async (req, res, next) => {
+  res.locals.categories = await categories.getAll();
+  next();
+});
 
 // routes
 app.use("/", indexRouter);

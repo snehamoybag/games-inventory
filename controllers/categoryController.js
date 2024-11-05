@@ -25,7 +25,6 @@ const validateFormFields = [
 const getViewData = async (categoryId) => ({
   title: "Edit Category",
   mainView: "addCategory",
-  categories: await categories.getAll(),
   fieldValues: await categories.get(categoryId),
 });
 

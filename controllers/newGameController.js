@@ -54,8 +54,8 @@ const validateFormFields = [
 const getViewData = async () => ({
   title: "Add New Game",
   mainView: "addGame",
-  categories: await categories.getAll(),
   developers: await developers.getAll(),
+  categories: await categories.getAll(),
 });
 
 exports.GET = async (req, res) => {

@@ -1,9 +1,9 @@
-const { categories } = require("../db/queries");
+const { games } = require("../db/queries");
 
 exports.GET = async (req, res) => {
   res.render("root", {
     title: "Games Inventory",
-    categories: await categories.getAll(),
+    games: await games.getAll(),
     mainView: "index",
   });
 };
