@@ -1,26 +1,49 @@
 <section>
   <h2>Add New Game</h2>
-  <form action="/new/game" method="POST" id="new-game-form">
+  <form 
+    id="new-game-form"
+    method="POST"
+    action=<%=locals.fieldValues ? `/game/edit/${fieldValues.game.id}` : "/new/game" %> 
+  >
     <p>
       <label for="game-name">Name: </label>
       <% if (locals.errors && errors.gameName) { %>
         <label for="game-name" class="error-msg">Error: <%= errors.gameName %></label>
       <% }; %>
-      <input type="text" id="game-name" name="gameName" placeholder="Grand Theft Auto VI ..." required>
+      <input 
+        type="text"
+        id="game-name"
+        name="gameName"
+        placeholder="Grand Theft Auto VI ..."
+        required
+        value="<%= locals.fieldValues ? fieldValues.game.name : "" %>"
+      />
     </p>
     <p>
       <label for="game-logo-url">Logo Url: </label>
       <% if (locals.errors && errors.gameLogoUrl) { %>
         <label for="game-logo-url" class="error-msg">Error: <%= errors.gameLogoUrl %></label>
       <% }; %>
-      <input type="text" id="game-logo-url" name="gameLogoUrl" placeholder="https://imghost.com/game-logo.jpg ..." required />
+      <input 
+        type="text" 
+        id="game-logo-url"
+        name="gameLogoUrl" 
+        placeholder="https://imghost.com/game-logo.jpg ..." 
+        required 
+        value="<%= locals.fieldValues ? fieldValues.game.logo_url : "" %>"
+      />
     </p>
     <p>
       <label for="game-coverimg-url">Cover Image Url: </label>
       <% if (locals.errors && errors.gameCoverImgUrl) { %>
         <label for="game-coverimg-url" class="error-msg">Error: <%= errors.gameCoverImgUrl %></label>
       <% }; %>
-      <input type="text" id="game-coverimg-url" name="gameCoverImgUrl" placeholder="https://imghost.com/game-cover.jpg ..." />
+      <input type="text" 
+        id="game-coverimg-url"
+        name="gameCoverImgUrl"
+        placeholder="https://imghost.com/game-cover.jpg ..."
+        value="<%= locals.fieldValues ? fieldValues.game.coverimg_url : "" %>"
+      />
     </p>
     <p>
       <label for="game-developers">Developers : (Can't find one? Register a new one <a href="/new/developer">here.</a>)</label>
@@ -32,7 +55,14 @@
           <option value="" disabled>-- You can choose multiple --</option>
           <hr />
           <% developers.forEach((developer) => { %>
-            <option value=<%= developer.id %>><%= developer.name %></option>
+            <option 
+              value="<%= developer.id %>"
+              <% if (locals.fieldValues && fieldValues.selectedDevelopers.find((prevDev) => prevDev.id === developer.id)) { %>
+                selected
+              <% };%>
+            >
+              <%= developer.name %>
+            </option>
           <% }); %>
         <% } else { %>
           <option value="" disabled>no developer found</option>
@@ -49,10 +79,17 @@
           <option value="" disabled>-- You can choose multiple --</option>
           <hr />
           <% categories.forEach((category) => { %>
-            <option value=<%= category.id %>><%= category.name %></option>
+            <option 
+              value="<%= category.id %>"
+              <% if (locals.fieldValues && fieldValues.selectedCategories.find((prevCategory) => prevCategory.id === category.id)) { %>
+                selected
+              <% };%>
+            >
+              <%= category.name %>
+            </option>
           <% }); %>
         <% } else { %>
-          <option value="" disabled>no developer found</option>
+          <option value="" disabled>no category found</option>
         <% }; %>
       </select>
     </p>
@@ -65,15 +102,26 @@
       <% if (locals.errors && errors.gameDetails) { %>
         <label for="game-details" class="error-msg">Error: <%= errors.gameDetails %></label>
       <% }; %>
-      <textarea id="game-details" name="gameDetails" placeholder="This game is awesome ..." required></textarea>
+      <textarea
+        id="game-details"
+        name="gameDetails"
+        placeholder="This game is awesome ..."
+        required
+      ><%= locals.fieldValues ? fieldValues.game.details : "" %></textarea>
     </p>
     <p>
       <label for="game-price">Price (Dollars USA): </label>
       <% if (locals.errors && errors.gamePrice) { %>
         <label for="game-price" class="error-msg">Error: <%= errors.gamePrice %></label>
       <% }; %>
-      <input type="text" id="game-price" name="gamePrice" placeholder="3.99" required />
+      <input 
+        type="text"
+        id="game-price"
+        name="gamePrice"
+        placeholder="3.99"
+        value="<%= locals.fieldValues ? fieldValues.game.price : "" %>"
+        required />
     </p>
-    <button type="submit">Add Game</button>
+    <button type="submit"><%= locals.fieldValues ? "Done" : "Add Game"%></button>
   </form>
 </section>

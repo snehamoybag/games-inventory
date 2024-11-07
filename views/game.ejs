@@ -1,0 +1,23 @@
+<section class="game">
+  <div class="game-header">
+    <div class="game-controlls">
+      <a href="/game/edit/<%= game.id %>">Edit</a>
+      <form action="/game/delete/<%= game.id %>" method="POST">
+        <button type="submit" class="game-controlls_delete_btn">Delete</button>
+      </form>
+    </div>
+    <img src="<%= game.coverimg_url %>" alt="cover image of <%= game.name %>" class="game__coverimg" />
+    <img src="<%= game.logo_url %>" alt="logo of <%= game.name %>" class="game__logo" />
+    <h1 class="game__title"><%= game.name %></h1>
+    <p>
+      <%= gameDevelopers.length > 1 ? "Developers: " : "Developer: " %>
+      <% gameDevelopers.forEach((developer, index) => { %>
+        <a href="/developer/<%= developer.id %>"><%= developer.name %></a>
+        <%= index === gameDevelopers.length - 1 ? "" : ","; %>
+      <% }); %>
+    </p>
+  </div>
+  <div class="game-body">
+    <p class="game__desc"><%= game.details %></p>
+  </div>
+</section>

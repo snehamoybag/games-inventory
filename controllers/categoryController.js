@@ -2,18 +2,11 @@ const { body, validationResult } = require("express-validator");
 const { categories } = require("../db/queries");
 const { parseValidationErrors } = require("../utils/parseValidationErrors");
 
-const validateCategoryName = async (value) => {
-  if (await categories.isNameTaken(value)) {
-    return Promise.reject("Category already exists, please enter a new one.");
-  }
-};
-
 const validateFormFields = [
   body("categoryName")
     .trim()
     .isLength({ min: 1, max: 255 })
-    .withMessage("Category name must be between 1 and 255 characters.")
-    .custom(validateCategoryName),
+    .withMessage("Category name must be between 1 and 255 characters."),
 
   body("categoryIconUrl")
     .optional()

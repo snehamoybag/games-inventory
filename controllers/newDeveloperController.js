@@ -17,18 +17,19 @@ const validateFormFileds = [
 
   body("developerLogoUrl")
     .trim()
-    .isLength({ min: 1, max: 255 })
+    .isLength({ max: 255 })
     .withMessage("Logo url must be between 1 and 255 characters."),
 
   body("developerCoverImgUrl")
     .optional()
     .trim()
-    .isLength({ min: 1, max: 255 })
+    .isLength({ max: 255 })
     .withMessage("Cover image url must be between 1 and 255 charactes."),
 
   body("developerDetails")
+    .optional()
     .trim()
-    .isLength({ min: 30, max: 2000 })
+    .isLength({ max: 2000 })
     .withMessage("Details must be between 30 and 2000 characters."),
 ];
 

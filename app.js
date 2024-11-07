@@ -4,6 +4,7 @@ const express = require("express");
 const indexRouter = require("./routes/indexRouter");
 const newRouter = require("./routes/newRouter");
 const categoryRouter = require("./routes/categoryRouter");
+const gameRouter = require("./routes/gameRouter");
 const { categories } = require("./db/queries");
 
 const app = express();
@@ -25,6 +26,7 @@ app.use(async (req, res, next) => {
 app.use("/", indexRouter);
 app.use("/new", newRouter);
 app.use("/category", categoryRouter);
+app.use("/game", gameRouter);
 
 // run server
 const HOST = process.env.HOST || "localhost";

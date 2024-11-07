@@ -12,6 +12,12 @@ class Games {
     return rows;
   }
 
+  async isValid(gameId) {
+    const query = "SELECT 1 FROM games WHERE id = $1";
+    const { rows } = await pool.query(query, [Number(gameId)]);
+    return rows.length > 0;
+  }
+
   async isNameTaken(name) {
     const query = "SELECT 1 FROM games WHERE name ILIKE $1";
     const { rows } = await pool.query(query, [name]);
@@ -51,6 +57,63 @@ class Games {
       await pool.query(query, [Number(gameId), Number(categoryId)]);
     });
   }
+
+  async edit(
+    id,
+    name,
+    logoUrl,
+    coverImgUrl,
+    details,
+    price,
+    developerIds = [],
+    categoryIds = [],
+  ) {
+    const gameId = Number(id);
+
+    // update the game table
+    const editGameQuery = `
+      UPDATE games 
+      SET name = $2,
+        logo_url = $3,
+        coverimg_url = $4,
+        details = $5,
+        price= $6
+      WHERE id = $1
+    `;
+
+    await pool.query(editGameQuery, [
+      gameId,
+      name,
+      logoUrl,
+      coverImgUrl,
+      details,
+      price,
+    ]);
+
+    // update games_developers table
+    await pool.query("DELETE FROM games_developers WHERE game_id = $1", [
+      gameId,
+    ]);
+
+    developerIds.forEach(async (devId) => {
+      await pool.query(
+        "INSERT INTO games_developers (game_id, developer_id) VALUES ($1, $2)",
+        [gameId, Number(devId)],
+      );
+    });
+
+    // update games_categories table
+    await pool.query("DELETE FROM games_categories WHERE game_id = $1", [
+      gameId,
+    ]);
+
+    categoryIds.forEach(async (categoryId) => {
+      await pool.query(
+        "INSERT INTO games_categories (game_id, category_id) VALUES ($1, $2)",
+        [gameId, Number(categoryId)],
+      );
+    });
+  }
 }
 
 class Developers {
@@ -59,6 +122,17 @@ class Developers {
       "SELECT * FROM developers ORDER BY name ASC",
     );
 
+    return rows;
+  }
+
+  async getByGame(gameId) {
+    const query = `
+     SELECT developers.* FROM developers 
+     INNER JOIN games_developers ON developers.id = games_developers.developer_id
+     WHERE games_developers.game_id = $1;
+   `;
+
+    const { rows } = await pool.query(query, [gameId]);
     return rows;
   }
 
@@ -88,6 +162,17 @@ class Categories {
     const { rows } = await pool.query(
       "SELECT * FROM categories ORDER BY name ASC",
     );
+    return rows;
+  }
+
+  async getByGame(gameId) {
+    const query = `
+     SELECT categories.* FROM categories 
+     INNER JOIN games_categories ON categories.id = games_categories.category_id
+     WHERE games_categories.game_id = $1;
+   `;
+
+    const { rows } = await pool.query(query, [gameId]);
     return rows;
   }
 
