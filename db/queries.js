@@ -117,6 +117,12 @@ class Games {
 }
 
 class Developers {
+  async getDeveloper(developerId) {
+    const query = "SELECT * FROM developers WHERE id = $1";
+    const { rows } = await pool.query(query, [Number(developerId)]);
+    return rows[0];
+  }
+
   async getAll() {
     const { rows } = await pool.query(
       "SELECT * FROM developers ORDER BY name ASC",
@@ -136,6 +142,12 @@ class Developers {
     return rows;
   }
 
+  async isValid(id) {
+    const query = "SELECT 1 FROM developers WHERE id = $1";
+    const { rows } = await pool.query(query, [Number(id)]);
+    return rows.length > 0;
+  }
+
   async isNameTaken(name) {
     const query = "SELECT 1 FROM developers WHERE name ILIKE $1";
     const { rows } = await pool.query(query, [name]);
@@ -148,6 +160,19 @@ class Developers {
       VALUES ($1, $2, $3, $4)`;
 
     await pool.query(query, [name, details, logoUrl, coverImgUrl]);
+  }
+
+  async edit(id, name, logoUrl, coverImgUrl, details) {
+    const query = `
+      UPDATE developers
+      SET name = $2,
+        logo_url = $3,
+        coverimg_url = $4, 
+        details = $5
+      WHERE id = $1;
+    `;
+
+    await pool.query(query, [Number(id), name, logoUrl, coverImgUrl, details]);
   }
 }
 
@@ -212,7 +237,7 @@ class Categories {
       WHERE id = $1
     `;
 
-    await pool.query(query, [categoryId, name, iconUrl]);
+    await pool.query(query, [Number(categoryId), name, iconUrl]);
   }
 }
 

@@ -1,0 +1,11 @@
+<section>
+  <div class="developer-controlls">
+    <a href="/developer/edit/<%= developer.id %>">Edit</a>
+    <form action="/developer/delete/<%=developer.id %>">
+      <button type="submit">Delete</button>
+    </form>
+  </div>
+  <div class="developer__header">
+    <h2><%= developer.name %></h2>
+  </div>
+</section>

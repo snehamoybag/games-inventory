@@ -1,35 +1,61 @@
 <section>
-  <h2>Register New Developer</h2>
+  <h2><%= title %></h2>
 
-  <form id="new-developer-form" action="/new/developer" method="POST">
+  <form id="new-developer-form"
+    action="<%= locals.developer ? `/developer/edit/${developer.id}` : '/new/developer' %>"
+    method="POST"
+  >
     <p>
       <label for="developer-name">Developer Name: </label>
       <% if (locals.errors && errors.developerName) { %>
         <label for="developer-name"><%= errors.developerName %></label>
       <% };%>
-      <input type="text" id="devevloper-name" name="developerName" placeholder="Rockstar Games ..." required />
+      <input 
+        type="text" 
+        id="devevloper-name"
+        name="developerName" 
+        placeholder="Rockstar Games ..." 
+        value="<%= locals.developer && developer.name ? developer.name : '' %>"
+        required 
+      />
     </p>
     <p>
       <label for="developer-logo-url">Logo Url: </label>
       <% if (locals.errors && errors.developerLogoUrl) { %>
         <label for="developer-logo-url"><%= errors.developerLogoUrl %></label>
       <% };%>
-      <input type="text" id="developer-logo-url" name="developerLogoUrl" placeholder="https://imghost.com/dev-logo.jpg ..." />
+      <input 
+        type="text" 
+        id="developer-logo-url" 
+        name="developerLogoUrl" 
+        placeholder="https://imghost.com/dev-logo.jpg ..." 
+        value="<%= locals.developer && developer.logo_url ? developer.logo_url : '' %>"
+      />
     </p>
     <p>
       <label for="developer-coverimg-url">Cover Image Url</label>
       <% if (locals.errors && errors.developerCoverImgUrl) { %>
         <label for="developer-coverimg-url"><%= errors.developerCoverImgUrl %></label>
       <% };%>
-      <input type="text" id="developer-coverimg-url" name="developerCoverImgUrl" placeholder="https://imghost.com/dev-cover.jpg ...">
+      <input 
+        type="text" 
+        id="developer-coverimg-url" 
+        name="developerCoverImgUrl" 
+        value="<%= locals.developer && developer.coverimg_url ? developer.coverimg_url : '' %>"
+        placeholder="https://imghost.com/dev-cover.jpg ...">
     </p>
     <p>
       <label for="developer-details">Details: </label>
       <% if (locals.errors && errors.developerDetails) { %>
         <label for="developer-details"><%= errors.developerDetails %></label>
       <% };%>
-      <textarea id="developer-details" name="developerDetails" placeholder="We are the best AAA game developer in the world! ..." required></textarea>
+      <textarea 
+        id="developer-details"
+        name="developerDetails"
+        placeholder="We are the best AAA game developer in the world! ..."
+        required
+      ><%= locals.developer && developer.details ? developer.details : '' %></textarea>
     </p>
-    <button type="submit">Add Developer</button>
+    <button type="submit"><%= locals.developer ? "Done" : "Add Developer" %></button>
   </form>
 </section>
