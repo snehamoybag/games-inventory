@@ -2,7 +2,7 @@
 // maps all the error msg to its path
 // {path: msg, anotherPath: itsMsg}
 
-exports.parseValidationErrors = (errors = []) => {
+const parseValidationErrors = (errors = []) => {
   return errors.reduce((parsedError, currentError) => {
     return {
       ...parsedError,
@@ -10,3 +10,5 @@ exports.parseValidationErrors = (errors = []) => {
     };
   }, {});
 };
+
+module.exports = parseValidationErrors;

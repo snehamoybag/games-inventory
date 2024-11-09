@@ -1,6 +1,6 @@
 const { body, validationResult } = require("express-validator");
 const { categories } = require("../db/queries");
-const { parseValidationErrors } = require("../utils/parseValidationErrors");
+const parseValidationErrors = require("../utils/parseValidationErrors");
 
 const validateFormFields = [
   body("categoryName")

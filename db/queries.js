@@ -153,7 +153,7 @@ class Developers {
      WHERE games_developers.game_id = $1;
    `;
 
-    const { rows } = await pool.query(query, [gameId]);
+    const { rows } = await pool.query(query, [Number(gameId)]);
     return rows;
   }
 

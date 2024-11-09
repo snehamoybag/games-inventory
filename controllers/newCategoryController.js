@@ -1,6 +1,6 @@
 const { body, validationResult } = require("express-validator");
 const { categories } = require("../db/queries");
-const { parseValidationErrors } = require("../utils/parseValidationErrors.js");
+const parseValidationErrors = require("../utils/parseValidationErrors.js");
 
 const validateCategoryName = async (value) => {
   if (await categories.isNameTaken(value)) {

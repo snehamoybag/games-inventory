@@ -1,6 +1,15 @@
 const { body, validationResult } = require("express-validator");
 const { games, categories, developers } = require("../db/queries");
-const { parseValidationErrors } = require("../utils/parseValidationErrors");
+const parseValidationErrors = require("../utils/parseValidationErrors");
+const isValidUrl = require("../utils/isValidUrl.js");
+
+const validateImgUrl = (value) => {
+  if (!isValidUrl(value)) {
+    throw new Error("Invalid image url");
+  }
+
+  return true;
+};
 
 const validateFormFields = [
   body("gameName")
@@ -23,13 +32,15 @@ const validateFormFields = [
   body("gameLogoUrl")
     .trim()
     .isLength({ min: 1, max: 255 })
-    .withMessage("Logo url must be between 1 and 255 characters."),
+    .withMessage("Logo url must be between 1 and 255 characters.")
+    .custom(validateImgUrl),
 
   body("gameCoverImgUrl")
     .trim()
     .optional()
     .isLength({ max: 255 })
-    .withMessage("Cover image url must not be more than 255 characters."),
+    .withMessage("Cover image url must not be more than 255 characters.")
+    .custom(validateImgUrl),
 
   body("gameDetails")
     .trim()

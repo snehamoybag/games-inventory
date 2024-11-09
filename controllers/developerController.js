@@ -1,6 +1,6 @@
 const { body, validationResult } = require("express-validator");
 const { developers } = require("../db/queries");
-const { parseValidationErrors } = require("../utils/parseValidationErrors");
+const parseValidationErrors = require("../utils/parseValidationErrors");
 
 const validateFormFileds = [
   body("developerName")
