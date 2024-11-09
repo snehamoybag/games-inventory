@@ -8,7 +8,7 @@ class Games {
   }
 
   async getAll() {
-    const { rows } = await pool.query("SELECT * FROM games ORDER BY name ASC");
+    const { rows } = await pool.query("SELECT * FROM games ORDER BY id DESC");
     return rows;
   }
 
@@ -31,8 +31,8 @@ class Games {
     coverImgUrl,
     details,
     price,
-    developerIds,
-    categoryIds,
+    developerIds = [],
+    categoryIds = [],
   ) {
     const addTOGamesQuery = `INSERT INTO games (name, logo_url, coverimg_url, details, price) 
       VALUES($1, $2, $3, $4, $5) RETURNING id`; // returns modified rows id
@@ -49,12 +49,12 @@ class Games {
 
     developerIds.forEach(async (devId) => {
       const query = `INSERT INTO games_developers (game_id, developer_id) VALUES ($1, $2)`;
-      await pool.query(query, [Number(gameId), Number(devId)]);
+      await pool.query(query, [gameId, Number(devId)]);
     });
 
     categoryIds.forEach(async (categoryId) => {
       const query = `INSERT INTO games_categories (game_id, category_id) VALUES ($1, $2)`;
-      await pool.query(query, [Number(gameId), Number(categoryId)]);
+      await pool.query(query, [gameId, Number(categoryId)]);
     });
   }
 
@@ -113,6 +113,21 @@ class Games {
         [gameId, Number(categoryId)],
       );
     });
+  }
+
+  async delete(id) {
+    const gameId = Number(id);
+
+    const deleteFromGamesDevelopers =
+      "DELETE FROM games_developers WHERE game_id = $1";
+    await pool.query(deleteFromGamesDevelopers, [gameId]);
+
+    const deleteFromGamesCategories =
+      "DELETE FROM games_categories WHERE game_id = $1";
+    await pool.query(deleteFromGamesCategories, [gameId]);
+
+    const deleteFromGames = "DELETE FROM games WHERE id = $1";
+    await pool.query(deleteFromGames, [gameId]);
   }
 }
 

@@ -116,3 +116,15 @@ exports.editPOST = [
     res.redirect(`/game/${gameId}`);
   },
 ];
+
+exports.deletePOST = async (req, res) => {
+  const gameId = req.params.id;
+
+  if (!(await games.isValid(gameId))) {
+    res.status(400).send("Error: game does not exist.");
+    return;
+  }
+
+  await games.delete(gameId);
+  res.redirect("/");
+};
