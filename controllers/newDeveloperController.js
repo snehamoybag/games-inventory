@@ -69,6 +69,8 @@ exports.POST = [
       developerCoverImgUrl,
     );
 
-    res.redirect(`/developer/${req.params.id}`);
+    const developer = await developers.getByName(developerName);
+
+    res.redirect(`/developer/${developer.id}`);
   },
 ];

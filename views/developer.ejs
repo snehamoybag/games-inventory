@@ -1,7 +1,7 @@
 <section>
   <div class="developer-controlls">
     <a href="/developer/edit/<%= developer.id %>">Edit</a>
-    <form action="/developer/delete/<%=developer.id %>">
+    <form action="/developer/delete/<%=developer.id %>" method="POST">
       <button type="submit">Delete</button>
     </form>
   </div>

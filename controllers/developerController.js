@@ -1,5 +1,5 @@
 const { body, validationResult } = require("express-validator");
-const { developers } = require("../db/queries");
+const { games, developers } = require("../db/queries");
 const parseValidationErrors = require("../utils/parseValidationErrors");
 
 const validateFormFileds = [
@@ -86,3 +86,26 @@ exports.editPOST = [
     res.redirect(`/developer/${req.params.id}`);
   },
 ];
+
+exports.deletePOST = async (req, res) => {
+  const developerId = req.params.id;
+
+  if (!(await developers.isValid(developerId))) {
+    res.status(400).send("Error: developer does not exist.");
+    return;
+  }
+
+  const gamesByDeveloper = await games.getByDeveloper(developerId);
+
+  if (gamesByDeveloper.length) {
+    res
+      .status(400)
+      .send(
+        "Error: please delete all the games published by the developer first before attempting to delete the developer.",
+      );
+    return;
+  }
+
+  await developers.delete(developerId);
+  res.redirect("/");
+};

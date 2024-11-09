@@ -12,6 +12,16 @@ class Games {
     return rows;
   }
 
+  async getByDeveloper(developerId) {
+    const query = `SELECT games.* FROM games 
+      INNER JOIN games_developers ON games_developers.developer_id = $1
+      WHERE games.id = games_developers.game_id`;
+
+    const { rows } = await pool.query(query, [Number(developerId)]);
+
+    return rows;
+  }
+
   async isValid(gameId) {
     const query = "SELECT 1 FROM games WHERE id = $1";
     const { rows } = await pool.query(query, [Number(gameId)]);
@@ -146,6 +156,12 @@ class Developers {
     return rows;
   }
 
+  async getByName(name = "") {
+    const query = "SELECT * FROM developers WHERE name ILIKE $1";
+    const { rows } = await pool.query(query, [name]);
+    return rows[0];
+  }
+
   async getByGame(gameId) {
     const query = `
      SELECT developers.* FROM developers 
@@ -188,6 +204,17 @@ class Developers {
     `;
 
     await pool.query(query, [Number(id), name, logoUrl, coverImgUrl, details]);
+  }
+
+  async delete(id) {
+    const developerId = Number(id);
+
+    const deleteFromGamesDevelopers =
+      "DELETE FROM games_developers WHERE developer_id = $1";
+    await pool.query(deleteFromGamesDevelopers, [developerId]);
+
+    const deleteFromDevelopers = "DELETE FROM developers WHERE id = $1";
+    await pool.query(deleteFromDevelopers, [developerId]);
   }
 }
 
