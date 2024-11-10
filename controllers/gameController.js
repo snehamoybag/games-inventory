@@ -2,6 +2,9 @@ const { body, validationResult } = require("express-validator");
 const { games, categories, developers } = require("../db/queries");
 const parseValidationErrors = require("../utils/parseValidationErrors");
 const isValidUrl = require("../utils/isValidUrl.js");
+const asyncHandler = require("express-async-handler");
+const CustomNotFoundError = require("../errors/CustomNotFoundError.js");
+const CustomBadRequestError = require("../errors/CustomBadRequestError.js");
 
 const validateImgUrl = (value) => {
   if (!isValidUrl(value)) {
@@ -53,9 +56,13 @@ const validateFormFields = [
     .withMessage("Price must be number or decimal."),
 ];
 
-exports.GET = async (req, res) => {
+exports.GET = asyncHandler(async (req, res) => {
   const gameId = req.params.id;
   const game = await games.getGame(gameId);
+
+  if (!game) {
+    throw new CustomNotFoundError("Game not found.");
+  }
 
   res.render("root", {
     mainView: "game",
@@ -63,7 +70,7 @@ exports.GET = async (req, res) => {
     game: game,
     gameDevelopers: await developers.getByGame(gameId),
   });
-};
+});
 
 const getEditViewData = async (gameId) => ({
   title: "Edit Game",
@@ -77,29 +84,36 @@ const getEditViewData = async (gameId) => ({
   },
 });
 
-exports.editGET = async (req, res) => {
+exports.editGET = asyncHandler(async (req, res) => {
   const gameId = req.params.id;
+  const game = await games.getGame(gameId);
+
+  if (!game) {
+    throw new CustomNotFoundError("Game not found.");
+  }
+
   res.render("root", await getEditViewData(gameId));
-};
+});
 
 exports.editPOST = [
   validateFormFields,
-  async (req, res) => {
+  asyncHandler(async (req, res) => {
     const gameId = req.params.id;
+    const game = await games.getGame(gameId);
 
-    const errors = validationResult(req);
+    // if id is invalid
+    if (!game) {
+      throw new CustomBadRequestError(`Cannot post on ${req.originalUrl}`);
+    }
+
     // if validation error
+    const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
       const viewData = await getEditViewData(gameId);
       const parsedErrors = parseValidationErrors(errors.array());
 
       res.status(400).render("root", { ...viewData, errors: parsedErrors });
-      return;
-    }
-
-    // if id is invalid
-    if (!(await games.isValid(gameId))) {
-      res.status(400).send("Error: invalid game ID");
       return;
     }
 
@@ -125,17 +139,17 @@ exports.editPOST = [
     );
 
     res.redirect(`/game/${gameId}`);
-  },
+  }),
 ];
 
-exports.deletePOST = async (req, res) => {
+exports.deletePOST = asyncHandler(async (req, res) => {
   const gameId = req.params.id;
+  const game = await games.getGame(gameId);
 
-  if (!(await games.isValid(gameId))) {
-    res.status(400).send("Error: game does not exist.");
-    return;
+  if (!game) {
+    throw new CustomBadRequestError(`Invalid game ID: ${gameId}`);
   }
 
   await games.delete(gameId);
   res.redirect("/");
-};
+});

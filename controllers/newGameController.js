@@ -2,6 +2,7 @@ const { body, validationResult } = require("express-validator");
 const { games, categories, developers } = require("../db/queries");
 const parseValidationErrors = require("../utils/parseValidationErrors");
 const isValidUrl = require("../utils/isValidUrl");
+const asyncHandler = require("express-async-handler");
 
 const validateGameName = async (value) => {
   if (await games.isNameTaken(value)) {
@@ -69,13 +70,13 @@ const getViewData = async () => ({
   categories: await categories.getAll(),
 });
 
-exports.GET = async (req, res) => {
+exports.GET = asyncHandler(async (req, res) => {
   res.render("root", await getViewData());
-};
+});
 
 exports.POST = [
   validateFormFields,
-  async (req, res) => {
+  asyncHandler(async (req, res) => {
     const errors = validationResult(req);
 
     // if validation error
@@ -108,5 +109,5 @@ exports.POST = [
     );
 
     res.redirect("/");
-  },
+  }),
 ];

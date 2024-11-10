@@ -30,6 +30,26 @@ app.use("/category", categoryRouter);
 app.use("/game", gameRouter);
 app.use("/developer", developerRouter);
 
+// error handler
+app.use((err, req, res, next) => {
+  console.error(err.message);
+
+  res.status(err.statusCode || 500).render("error", {
+    name: err.name || "error",
+    statusCode: err.statusCode || 500,
+    message: err.message || "internal server error",
+  });
+});
+
+// error 404 route. Make sure it is at the end of all middleware functions
+app.use((req, res, next) => {
+  res.status(404).render("error", {
+    name: "NotFound",
+    statusCode: 404,
+    message: "Page not found.",
+  });
+});
+
 // run server
 const HOST = process.env.HOST || "localhost";
 const PORT = process.env.PORT || 3000;

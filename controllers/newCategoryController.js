@@ -1,6 +1,7 @@
 const { body, validationResult } = require("express-validator");
 const { categories } = require("../db/queries");
 const parseValidationErrors = require("../utils/parseValidationErrors.js");
+const asyncHandler = require("express-async-handler");
 
 const validateCategoryName = async (value) => {
   if (await categories.isNameTaken(value)) {
@@ -27,13 +28,13 @@ const viewData = {
   mainView: "addCategory",
 };
 
-exports.GET = (req, res) => {
+exports.GET = asyncHandler((req, res) => {
   res.render("root", viewData);
-};
+});
 
 exports.POST = [
   validateFormFields,
-  async (req, res) => {
+  asyncHandler(async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -47,5 +48,5 @@ exports.POST = [
 
     await categories.add(categoryName, categoryIconUrl);
     res.redirect("/");
-  },
+  }),
 ];

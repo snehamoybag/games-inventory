@@ -1,6 +1,7 @@
 const { body, validationResult } = require("express-validator");
 const { developers } = require("../db/queries");
 const parseValidationErrors = require("../utils/parseValidationErrors");
+const asyncHandler = require("express-async-handler");
 
 const validateDeveloperName = async (value) => {
   if (await developers.isNameTaken(value)) {
@@ -39,13 +40,13 @@ const viewData = {
   mainView: "addDeveloper",
 };
 
-exports.GET = (req, res) => {
+exports.GET = asyncHandler((req, res) => {
   res.render("root", viewData);
-};
+});
 
 exports.POST = [
   validateFormFileds,
-  async (req, res) => {
+  asyncHandler(async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -72,5 +73,5 @@ exports.POST = [
     const developer = await developers.getByName(developerName);
 
     res.redirect(`/developer/${developer.id}`);
-  },
+  }),
 ];

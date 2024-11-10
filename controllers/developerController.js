@@ -1,6 +1,9 @@
 const { body, validationResult } = require("express-validator");
 const { games, developers } = require("../db/queries");
 const parseValidationErrors = require("../utils/parseValidationErrors");
+const asyncHandler = require("express-async-handler");
+const CustomBadRequestError = require("../errors/CustomBadRequestError");
+const CustomNotFoundError = require("../errors/CustomNotFoundError");
 
 const validateFormFileds = [
   body("developerName")
@@ -26,45 +29,58 @@ const validateFormFileds = [
     .withMessage("Details must be between 30 and 2000 characters."),
 ];
 
-const getEditFormViewData = async (developerId) => ({
+const getEditFormViewData = async (developer = {}) => ({
   title: "Edit Developer",
   mainView: "addDeveloper",
-  developer: await developers.getDeveloper(developerId),
+  developer: developer,
 });
 
-exports.GET = async (req, res) => {
+exports.GET = asyncHandler(async (req, res) => {
   const developer = await developers.getDeveloper(req.params.id);
+
+  if (!developer) {
+    throw CustomNotFoundError("Developer not found.");
+  }
 
   res.render("root", {
     title: `Developer: ${developer.name}`,
     mainView: "developer",
     developer: developer,
   });
-};
+});
 
-exports.editGET = async (req, res) => {
-  res.render("root", await getEditFormViewData(req.params.id));
-};
+exports.editGET = asyncHandler(async (req, res) => {
+  const developerId = req.params.id;
+  const developer = await developers.getDeveloper(developerId);
+
+  if (!developer) {
+    throw new CustomNotFoundError("Developer not found.");
+  }
+
+  res.render("root", await getEditFormViewData(developer));
+});
 
 exports.editPOST = [
   validateFormFileds,
-  async (req, res) => {
+  asyncHandler(async (req, res) => {
     const developerId = req.params.id;
+    const developer = await developers.getDeveloper(developerId);
+
+    // if invalid id
+    if (!developer) {
+      throw new CustomBadRequestError(`Cannot post on ${req.originalUrl}`);
+    }
+
+    // if validation errors
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
       const parsedErrors = parseValidationErrors(errors.array());
 
       res.status(400).render("root", {
-        ...(await getEditFormViewData(developerId)),
+        ...(await getEditFormViewData(developer)),
         errors: parsedErrors,
       });
-      return;
-    }
-
-    // if invalid id
-    if (!(await developers.isValid(developerId))) {
-      res.status(400).send("Error: Invalid developer Id");
       return;
     }
 
@@ -84,28 +100,25 @@ exports.editPOST = [
     );
 
     res.redirect(`/developer/${req.params.id}`);
-  },
+  }),
 ];
 
-exports.deletePOST = async (req, res) => {
+exports.deletePOST = asyncHandler(async (req, res) => {
   const developerId = req.params.id;
+  const developer = await developers.getDeveloper(developerId);
 
-  if (!(await developers.isValid(developerId))) {
-    res.status(400).send("Error: developer does not exist.");
-    return;
+  if (!developer) {
+    throw new CustomBadRequestError(`Invalid developer ID: ${developerId}`);
   }
 
-  const gamesByDeveloper = await games.getByDeveloper(developerId);
+  const gamesByDeveloper = await games.getByDeveloper(developer);
 
   if (gamesByDeveloper.length) {
-    res
-      .status(400)
-      .send(
-        "Error: please delete all the games published by the developer first before attempting to delete the developer.",
-      );
-    return;
+    throw new CustomBadRequestError(
+      "Please delete all the games published by the developer first before attempting to delete the developer.",
+    );
   }
 
   await developers.delete(developerId);
   res.redirect("/");
-};
+});

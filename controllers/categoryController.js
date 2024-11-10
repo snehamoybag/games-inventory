@@ -1,6 +1,9 @@
 const { body, validationResult } = require("express-validator");
 const { categories } = require("../db/queries");
 const parseValidationErrors = require("../utils/parseValidationErrors");
+const asyncHandler = require("express-async-handler");
+const CustomBadRequestError = require("../errors/CustomBadRequestError.js");
+const CustomNotFoundError = require("../errors/CustomNotFoundError.js");
 
 const validateFormFields = [
   body("categoryName")
@@ -15,50 +18,57 @@ const validateFormFields = [
     .withMessage("Icon url must be between 1 and 255 characters."),
 ];
 
-const getViewData = async (categoryId) => ({
+const getViewData = async (category = {}) => ({
   title: "Edit Category",
   mainView: "addCategory",
-  fieldValues: await categories.getCategory(categoryId),
+  fieldValues: category,
 });
 
-exports.GET = (req, res) => {
+exports.GET = asyncHandler((req, res) => {
   res.send(`Category ID: ${req.params.id}`);
-};
+});
 
-exports.deletePOST = async (req, res) => {
+exports.deletePOST = asyncHandler(async (req, res) => {
   const categoryId = req.params.id;
+  const category = await categories.getCategory(categoryId);
 
-  if (!(await categories.isValid(categoryId))) {
-    res.status(400).send("Error: Category does not exist.");
-    return;
+  if (!category) {
+    throw new CustomBadRequestError(`Invalid category ID: ${categoryId}`);
   }
 
   await categories.delete(categoryId);
   res.redirect("/");
-};
+});
 
-exports.editGET = async (req, res) => {
+exports.editGET = asyncHandler(async (req, res) => {
+  const categoryId = req.params.id;
+  const category = await categories.getCategory(categoryId);
+
+  if (!category) {
+    throw new CustomNotFoundError("Category not found.");
+  }
+
   res.render("root", await getViewData(req.params.id));
-};
+});
 
 exports.editPOST = [
   validateFormFields,
-  async (req, res) => {
+  asyncHandler(async (req, res) => {
     const categoryId = req.params.id;
+    const category = await categories.getCategory(categoryId);
+
+    // if id is invalid
+    if (!category) {
+      throw new CustomBadRequestError(`Cannot post on ${req.originalUrl}`);
+    }
 
     // if field is not valid
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      const viewData = await getViewData(categoryId);
+      const viewData = await getViewData(category);
       const parsedErrors = parseValidationErrors(errors.array());
 
       res.status(400).render("root", { ...viewData, errors: parsedErrors });
-      return;
-    }
-
-    // if id is invalid
-    if (!(await categories.isValid(categoryId))) {
-      res.status(400).send("Error: invalid category ID");
       return;
     }
 
@@ -66,5 +76,5 @@ exports.editPOST = [
     await categories.edit(categoryId, categoryName, categoryIconUrl);
 
     res.redirect("/");
-  },
+  }),
 ];
