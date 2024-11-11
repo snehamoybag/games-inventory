@@ -1,4 +1,16 @@
-<nav id="sidebar" class="sidebar">
+<nav id="sidebar" role="navigation" aria-label="Navigation sidebar" class="sidebar">
+
+<button 
+    type="button"
+    id="btn-hamburger"
+    class="btn btn--hamburger" 
+    aria-controls="sidebar-lists" 
+    aria-expanded="false"
+  >
+    <span class="sr-only">Open menu</span>
+  </button>
+
+  <div id="sidebar-lists" class="sidebar-lists hidden">
     <ul>
       <li><a href="/new/game"><span>+</span> Add New Game</a></li>
       <li><a href="/new/developer">Register A New Developer</a></li>
@@ -22,4 +34,5 @@
         </ul>
       </section>
     <% }; %>
+  </div>
 </nav>

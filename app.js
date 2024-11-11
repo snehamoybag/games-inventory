@@ -17,6 +17,9 @@ app.set("view engine", "ejs");
 // parse req.body
 app.use(express.urlencoded({ extended: true }));
 
+// serve static files
+app.use(express.static("public"));
+
 // global variables available to views
 app.use(async (req, res, next) => {
   res.locals.categories = await categories.getAll();

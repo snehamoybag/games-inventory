@@ -4,7 +4,7 @@ import eslintConfigPrettier from "eslint-config-prettier";
 
 export default [
   { files: ["**/*.js"], languageOptions: { sourceType: "commonjs" } },
-  { languageOptions: { globals: globals.node } },
+  { languageOptions: { globals: globals["shared-node-browser"] } },
   pluginJs.configs.recommended,
   eslintConfigPrettier,
 ];
