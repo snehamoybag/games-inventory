@@ -1,38 +1,25 @@
-<nav id="sidebar" role="navigation" aria-label="Navigation sidebar" class="sidebar">
-
-<button 
-    type="button"
-    id="btn-hamburger"
-    class="btn btn--hamburger" 
-    aria-controls="sidebar-lists" 
-    aria-expanded="false"
-  >
-    <span class="sr-only">Open menu</span>
-  </button>
-
-  <div id="sidebar-lists" class="sidebar-lists hidden">
-    <ul>
-      <li><a href="/new/game"><span>+</span> Add New Game</a></li>
-      <li><a href="/new/developer">Register A New Developer</a></li>
-    </ul>
-    <% if (locals.categories && categories.length > 0) { %>
-      <section>
-        <div>
-          <h2>Categories</h2>
-          <a href="/new/category">Add New Category</a>
-        </div>
-        <ul>
-          <% categories.forEach((category) => { %>
-            <li>
-              <a href="/category/<%= category.id %>"><%= category.name %></a>
-              <form action="/category/delete/<%= category.id %>" method="POST">
-                <button type="submit">Delete</button>
-              </form>
-              <a href="/category/edit/<%= category.id %>">Edit</a>
-            </li>
-          <% }); %>
-        </ul>
-      </section>
-    <% }; %>
-  </div>
+<nav id="sidebar" role="navigation" aria-label="Navigation sidebar" class="sidebar hidden">
+  <ul>
+    <li><a href="/new/game"><span>+</span> Add New Game</a></li>
+    <li><a href="/new/developer">Register A New Developer</a></li>
+  </ul>
+  <% if (locals.categories && categories.length > 0) { %>
+    <section>
+      <div>
+        <h2>Categories</h2>
+        <a href="/new/category">Add New Category</a>
+      </div>
+      <ul>
+        <% categories.forEach((category) => { %>
+          <li>
+            <a href="/category/<%= category.id %>"><%= category.name %></a>
+            <form action="/category/delete/<%= category.id %>" method="POST">
+              <button type="submit">Delete</button>
+            </form>
+            <a href="/category/edit/<%= category.id %>">Edit</a>
+          </li>
+        <% }); %>
+      </ul>
+    </section>
+  <% }; %>
 </nav>

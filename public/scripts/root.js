@@ -1,15 +1,15 @@
 // hamburger menu
 const hamburgerButton = document.querySelector("#btn-hamburger");
-const sidebarLists = document.querySelector("#sidebar-lists");
+const sidebar = document.querySelector("#sidebar");
 
 const openSidebar = () => {
-  sidebarLists.classList.remove("hidden");
+  sidebar.classList.remove("hidden");
   hamburgerButton.setAttribute("aria-expanded", true);
   hamburgerButton.querySelector(".sr-only").textContent = "Close menu";
 };
 
 const closeSidebar = () => {
-  sidebarLists.classList.add("hidden");
+  sidebar.classList.add("hidden");
   hamburgerButton.setAttribute("aria-expanded", false);
   hamburgerButton.querySelector(".sr-only").textContent = "Open menu";
 };
