@@ -1,22 +1,32 @@
 <nav id="sidebar" role="navigation" aria-label="Navigation sidebar" class="sidebar hidden">
-  <ul>
-    <li><a href="/new/game"><span>+</span> Add New Game</a></li>
-    <li><a href="/new/developer">Register A New Developer</a></li>
+  <ul class="sidebar__list">
+    <li class="sidebar__list-item"><a href="/new/game"><span>+</span> Add New Game</a></li>
+    <li class="sidebar__list-item"><a href="/new/developer">Register A New Developer</a></li>
   </ul>
   <% if (locals.categories && categories.length > 0) { %>
-    <section>
-      <div>
-        <h2>Categories</h2>
-        <a href="/new/category">Add New Category</a>
+    <section class="siderbar__section">
+      <div class="sidebar__section-header">
+        <h2 class="sidebar__section-title">Categories</h2>
+        <a class="btn btn--add" href="/new/category" title="Add new category">
+          <span class="sr-only">Add new category</span>
+        </a>
       </div>
-      <ul>
+      <ul class="sidebar__list">
         <% categories.forEach((category) => { %>
-          <li>
-            <a href="/category/<%= category.id %>"><%= category.name %></a>
-            <form action="/category/delete/<%= category.id %>" method="POST">
-              <button type="submit">Delete</button>
-            </form>
-            <a href="/category/edit/<%= category.id %>">Edit</a>
+          <li class="sidebar__list-item">
+            <div class="text-wrapper">
+                <a href="/category/<%= category.id %>"><%= category.name %></a>
+            </div>
+            <div class="controlls-wrapper">
+              <a class="btn btn--edit" href="/category/edit/<%= category.id %>" title="edit">
+                <span class="sr-only">Edit</span>
+              </a>
+              <form action="/category/delete/<%= category.id %>" method="POST">
+                <button type="submit" class="btn btn--delete" title="delete">
+                  <span class="sr-only">Delete</span>
+                </button>
+              </form>
+            </div>
           </li>
         <% }); %>
       </ul>

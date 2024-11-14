@@ -13,6 +13,9 @@
 
     <!-- css -->
     <link rel="stylesheet" href="/styles/root.css" />
+    <% if (locals.styles) { %>
+      <link rel="stylesheet" href="<%= styles %>">
+    <% }; %>
 
     <!-- js -->
     <script src="/scripts/root.js" defer></script>
@@ -26,6 +29,7 @@
           class="btn btn--hamburger" 
           aria-controls="sidebar" 
           aria-expanded="false"
+          title="open menu"
         >
           <span class="sr-only">Open menu</span>
         </button>
