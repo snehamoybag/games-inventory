@@ -1,5 +1,5 @@
 const { body, validationResult } = require("express-validator");
-const { categories } = require("../db/queries");
+const { categories, games } = require("../db/queries");
 const parseValidationErrors = require("../utils/parseValidationErrors");
 const asyncHandler = require("express-async-handler");
 const CustomBadRequestError = require("../errors/CustomBadRequestError.js");
@@ -24,8 +24,17 @@ const getViewData = async (category = {}) => ({
   fieldValues: category,
 });
 
-exports.GET = asyncHandler((req, res) => {
-  res.send(`Category ID: ${req.params.id}`);
+exports.GET = asyncHandler(async (req, res) => {
+  const categoryId = req.params.id;
+  const category = await categories.getCategory(categoryId);
+  const categoryGames = await games.getByCategory(categoryId);
+
+  res.render("root", {
+    title: `${category.name} Games`,
+    games: categoryGames,
+    mainView: "category",
+    styles: "category",
+  });
 });
 
 exports.deletePOST = asyncHandler(async (req, res) => {

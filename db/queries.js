@@ -12,13 +12,23 @@ class Games {
     return rows;
   }
 
+  async getByCategory(categoryId) {
+    const query = `SELECT games.* FROM games 
+      INNER JOIN games_categories 
+      ON games_categories.category_id = $1
+      WHERE games.id = games_categories.game_id`;
+
+    const { rows } = await pool.query(query, [Number(categoryId)]);
+    return rows;
+  }
+
   async getByDeveloper(developerId) {
     const query = `SELECT games.* FROM games 
-      INNER JOIN games_developers ON games_developers.developer_id = $1
+      INNER JOIN games_developers
+      ON games_developers.developer_id = $1
       WHERE games.id = games_developers.game_id`;
 
     const { rows } = await pool.query(query, [Number(developerId)]);
-
     return rows;
   }
 
