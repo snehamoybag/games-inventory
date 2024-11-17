@@ -1,0 +1,67 @@
+.games-container {
+  max-width: 40rem;
+  padding: 1em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.games-container__title {
+  font-size: var(--fs-600);
+  text-transform: uppercase;
+  padding: 0.5em;
+}
+
+.game-post {
+  display: flex;
+  border: 2px solid var(--clr-neutral-600);
+}
+
+.game-post__thumbnail {
+  align-self: center;
+  width: 7.5rem;
+  object-fit: cover;
+  object-position: center;
+}
+
+.game-post__texts {
+  padding: 1em;
+}
+
+.game-post__details {
+  font-size: var(--fs-200);
+  max-width: 60ch;
+  line-height: 1.2;
+  margin-top: 0.5em;
+}
+
+.game-post__link {
+  display: inline-block;
+  font-family: var(--ff-title);
+  font-size: var(--fs-100);
+  padding: 0.25em 0.5em;
+  background-color: var(--clr-accent-400);
+  color: var(--clr-neutral-100);
+  margin-top: 1.5em;
+  text-decoration: none;
+}
+
+.game-post__link:active {
+  transform: scale(95%);
+}
+
+/* screens */
+@media (min-width: 50em) {
+  .games-container {
+    max-width: 75rem;
+  }
+
+  .games {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .games > * {
+    flex-basis: 100%;
+  }
+}

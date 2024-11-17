@@ -1,16 +1,18 @@
-<% if (games.length) {
-  games.forEach((game) => { %>
-    <article class="game-post">
-      <img src="<%= game.logo_url %>" alt="logo of <%= game.name %>" class="game-post__thumbnail" />
-      <div class="game-post__texts">
-        <h3 class="game-post__title"><%= game.name %></h3>
-        <p class="game-post__details">
-          <%= game.details.length > 120 ? game.details.slice(0, 180) + "..." : game.details %>
-        </p>
-        <a class="game-post__link" href="/game/<%= game.id %>">View</a>
-      </div>
-    </article>
-  <% }); %> 
+<% if (games.length) { %>
+  <div class="games">
+    <% games.forEach((game) => { %>
+      <article class="game-post">
+        <img src="<%= game.logo_url %>" alt="logo of <%= game.name %>" class="game-post__thumbnail" />
+        <div class="game-post__texts">
+          <h3 class="game-post__title"><%= game.name %></h3>
+          <p class="game-post__details">
+            <%= game.details.length > 120 ? game.details.slice(0, 180) + "..." : game.details %>
+          </p>
+          <a class="game-post__link" href="/game/<%= game.id %>">View</a>
+        </div>
+      </article>
+    <% }); %> 
+  </div>
 <% } else { %>
   <div class="no-game-post">
     <h3 class="no-game-post__title">No game found!</h3>

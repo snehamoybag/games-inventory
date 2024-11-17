@@ -128,6 +128,12 @@ h4 {
   display: none;
 }
 
+footer {
+  padding: 2em;
+  text-align: center;
+  border: 1px solid var(--clr-neutral-600);
+}
+
 /* UTILITY CLASSES */
 .btn {
   display: inline-block;
@@ -214,4 +220,43 @@ h4 {
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+/* screens */
+@media (min-width: 65em) {
+  body {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-areas:
+      "header header header header header"
+      "sidebar main main main main"
+      "footer footer footer footer footer";
+    max-width: 100rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  header {
+    grid-area: header;
+  }
+
+  .sidebar {
+    grid-area: sidebar;
+  }
+
+  main {
+    grid-area: main;
+  }
+
+  footer {
+    grid-area: footer;
+  }
+
+  .btn--hamburger {
+    display: none;
+  }
+
+  .sidebar.hidden {
+    display: block;
+  }
 }

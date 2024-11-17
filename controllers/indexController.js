@@ -6,6 +6,6 @@ exports.GET = asyncHandler(async (req, res) => {
     title: "Games Inventory",
     games: await games.getAll(),
     mainView: "index",
-    styles: "/styles/index.css",
+    styles: "index",
   });
 });
