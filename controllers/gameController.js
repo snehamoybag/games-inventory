@@ -65,10 +65,12 @@ exports.GET = asyncHandler(async (req, res) => {
   }
 
   res.render("root", {
-    mainView: "game",
     title: game.name,
+    mainView: "game",
     game: game,
     gameDevelopers: await developers.getByGame(gameId),
+    gameCategories: await categories.getByGame(gameId),
+    styles: "game",
   });
 });
 

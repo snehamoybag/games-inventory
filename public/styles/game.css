@@ -1,0 +1,106 @@
+.game {
+  position: relative;
+  padding-bottom: 5em;
+}
+
+.game__header,
+.game__body {
+  max-width: 60rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.game__coverimg-wrapper {
+  position: relative;
+  z-index: -1;
+}
+
+.game__coverimg-wrapper::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, var(--clr-neutral-700) 70%);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.game__coverimg {
+  aspect-ratio: 16/9;
+}
+
+.game__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 2em;
+  margin-top: -35%;
+  position: relative;
+  isolation: isolate;
+}
+
+.game__logo {
+  width: 6.25rem;
+  object-fit: cover;
+  object-position: center;
+  box-shadow: 5px 5px 10px hsla(0, 0%, 0%, 0.5);
+}
+
+.game__title {
+  font-size: var(--fs-600);
+  line-height: 1.2;
+}
+
+.game__title,
+.game__price {
+  text-shadow: 2px 5px 5px hsla(0, 0%, 0%, 1);
+}
+
+.game__price {
+  font-family: var(--ff-title);
+  font-size: var(--fs-200);
+  margin-top: 0.5rem;
+  text-decoration: underline;
+  text-decoration-color: var(--clr-accent-400);
+  text-underline-offset: 0.25em;
+}
+
+.game__body {
+  padding: 0 1em;
+}
+
+.game__body > * + * {
+  margin-top: 1rem;
+}
+
+.game__controlls {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 1rem;
+  padding: 1em;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.game__controlls .btn--edit,
+.game__controlls .btn--delete {
+  font-size: 1.5rem;
+}
+
+/* screens */
+
+@media (min-width: 40em) {
+  .game__logo {
+    width: 10rem;
+  }
+
+  .game__title {
+    font-size: var(--fs-700);
+  }
+
+  .game__body {
+    font-size: var(--fs-600);
+  }
+}

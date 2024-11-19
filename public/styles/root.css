@@ -71,6 +71,12 @@ h4 {
   color: var(--clr-neutral-100);
 }
 
+a {
+  color: var(--clr-accent-400);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 0.05em;
+}
+
 .header {
   display: flex;
   flex-wrap: wrap;

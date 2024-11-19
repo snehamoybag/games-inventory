@@ -1,15 +1,17 @@
 <% if (locals.game && gameDevelopers) { %>
   <section class="game">
-    <div class="game-header">
-      <div class="game-controlls">
-        <a href="/game/edit/<%= game.id %>">Edit</a>
-        <form action="/game/delete/<%= game.id %>" method="POST">
-          <button type="submit" class="game-controlls_delete_btn">Delete</button>
-        </form>
-      </div>
+    <div class="game__coverimg-wrapper">
       <img src="<%= game.coverimg_url ? game.coverimg_url : '' %>" alt="cover image of <%= game.name %>" class="game__coverimg" />
+    </div>
+    <div class="game__header">
       <img src="<%= game.logo_url %>" alt="logo of <%= game.name %>" class="game__logo" />
-      <h1 class="game__title"><%= game.name %></h1>
+      <div>
+        <h1 class="game__title"><%= game.name %></h1>
+        <p class="game__price">Price: $<%= game.price %></p>
+      </div>
+    </div>
+    <div class="game__body">
+      <p><%= game.details %></p>
       <p>
         <%= gameDevelopers.length > 1 ? "Developers: " : "Developer: " %>
         <% gameDevelopers.forEach((developer, index) => { %>
@@ -17,9 +19,23 @@
           <%= index === gameDevelopers.length - 1 ? "" : ","; %>
         <% }); %>
       </p>
+      <p>
+        <%= gameCategories.length > 1 ? "Categories: " : "Category: " %>
+        <% gameCategories.forEach((category, index) => { %>
+          <a href="/category/<%= category.id %>"><%= category.name %></a>
+          <%= index === gameCategories.length - 1 ? "" : ","; %>
+        <% }); %>
+      </p>
     </div>
-    <div class="game-body">
-      <p class="game__desc"><%= game.details %></p>
+    <div class="game__controlls">
+      <a href="/game/edit/<%= game.id %>" class="btn btn--edit" title="Edit game">
+        <span class="sr-only">Edit Game</span>
+      </a>
+      <form action="/game/delete/<%= game.id %>" method="POST">
+        <button type="submit" class="btn btn--delete" title="Delete game">
+          <span class="sr-only">Delete Game</span>
+        </button>
+      </form>
     </div>
   </section>
 <% }; %>

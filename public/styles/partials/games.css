@@ -13,6 +13,7 @@
 
 .game-post {
   display: flex;
+  max-width: 40rem;
   border: 2px solid var(--clr-neutral-600);
 }
 
