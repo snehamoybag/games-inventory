@@ -2,8 +2,21 @@ const { body, validationResult } = require("express-validator");
 const { games, developers } = require("../db/queries");
 const parseValidationErrors = require("../utils/parseValidationErrors");
 const asyncHandler = require("express-async-handler");
+const isValidUrl = require("../utils/isValidUrl");
 const CustomBadRequestError = require("../errors/CustomBadRequestError");
 const CustomNotFoundError = require("../errors/CustomNotFoundError");
+
+const validateImgUrl = (url) => {
+  // since dev logo and cover image are optional,
+  //we want to ignore testing url when it is empty/not provied by the user
+  if (!url) return true;
+
+  if (!isValidUrl(url)) {
+    throw new Error("Invalid image url");
+  }
+
+  return true;
+};
 
 const validateFormFileds = [
   body("developerName")
@@ -13,14 +26,17 @@ const validateFormFileds = [
 
   body("developerLogoUrl")
     .trim()
+    .optional()
     .isLength({ max: 255 })
-    .withMessage("Logo url must be between 1 and 255 characters."),
+    .withMessage("Logo url must be between 1 and 255 characters.")
+    .custom(validateImgUrl),
 
   body("developerCoverImgUrl")
     .optional()
     .trim()
     .isLength({ max: 255 })
-    .withMessage("Cover image url must be between 1 and 255 charactes."),
+    .withMessage("Cover image url must be between 1 and 255 charactes.")
+    .custom(validateImgUrl),
 
   body("developerDetails")
     .optional()
@@ -33,6 +49,7 @@ const getEditFormViewData = async (developer = {}) => ({
   title: "Edit Developer",
   mainView: "addDeveloper",
   developer: developer,
+  styles: "add-developer",
 });
 
 exports.GET = asyncHandler(async (req, res) => {

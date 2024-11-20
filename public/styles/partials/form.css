@@ -1,0 +1,79 @@
+.form {
+  max-width: 50rem;
+  padding: 2em;
+}
+
+.form > * + * {
+  margin-top: 1.5rem;
+}
+
+.form > p {
+  display: grid;
+}
+
+.form > p > label {
+  margin-bottom: 0.5rem;
+}
+
+.form input,
+.form textarea,
+.form select {
+  background-color: transparent;
+  color: var(--clr-neutral-200);
+  border: 2px solid var(--clr-neutral-600);
+  border-radius: 0.25rem;
+}
+
+.form input,
+.form textarea {
+  padding: 1em;
+}
+
+.form option {
+  padding: 0.5em;
+  border: 1px solid var(--clr-neutral-600);
+  transition: padding 100ms ease-in;
+}
+
+.form option:checked {
+  background-color: var(--clr-neutral-600);
+  border-color: var(--clr-neutral-700);
+  padding-left: 1.5em;
+}
+
+.form__btn-submit {
+  display: block;
+  width: 100%;
+  padding: 1em;
+  font-family: var(--ff-title);
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  background-color: var(--clr-accent-400);
+  color: var(--clr-neutral-100);
+  border: none;
+  box-shadow: 5px 5px 10px hsla(0, 0%, 0%, 0.5);
+  transition: all 200ms ease-in;
+}
+
+.form__btn-submit:hover {
+  cursor: pointer;
+}
+
+.form__btn-submit:hover,
+.form__btn-submit:focus {
+  background-color: var(--clr-neutral-200);
+  color: var(--clr-accent-400);
+}
+
+.form__btn-submit:active {
+  box-shadow: none;
+  transform: scale(97%);
+}
+
+.form .error {
+  border-color: var(--clr-accent-400);
+}
+
+.form .error-msg {
+  color: var(--clr-accent-400);
+}

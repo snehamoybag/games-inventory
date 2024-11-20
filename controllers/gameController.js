@@ -34,15 +34,14 @@ const validateFormFields = [
 
   body("gameLogoUrl")
     .trim()
-    .isLength({ min: 1, max: 255 })
-    .withMessage("Logo url must be between 1 and 255 characters.")
+    .isLength({ min: 7, max: 255 })
+    .withMessage("Logo url must be between 7 and 255 characters.")
     .custom(validateImgUrl),
 
   body("gameCoverImgUrl")
     .trim()
-    .optional()
-    .isLength({ max: 255 })
-    .withMessage("Cover image url must not be more than 255 characters.")
+    .isLength({ min: 7, max: 255 })
+    .withMessage("Cover image url must be between 7 and 255 characters.")
     .custom(validateImgUrl),
 
   body("gameDetails")
@@ -84,6 +83,7 @@ const getEditViewData = async (gameId) => ({
     selectedDevelopers: await developers.getByGame(gameId),
     selectedCategories: await categories.getByGame(gameId),
   },
+  styles: "add-game",
 });
 
 exports.editGET = asyncHandler(async (req, res) => {

@@ -1,24 +1,40 @@
-<section>
-  <h2><%= title %></h2>
+<section class="add-category">
+  <h2 class="add-category__title"><%= title %></h2>
 
   <form id="new-category-form" 
-    action=<%=locals.fieldValues ? `/category/edit/${fieldValues.id}` : "/new/category" %> 
+    action="<%=locals.fieldValues ? `/category/edit/${fieldValues.id}` : '/new/category' %>"
     method="POST"
+    class="form"
   >
     <p>
       <label for="category-name">Category Name: </label>
       <% if (locals.errors && erros.categoryName) { %>
         <label for="category-name"><%= errors.categoryName %></label>
       <% };%>
-      <input type="text" id="category-name" name="categoryName" value="<%= locals.fieldValues ? fieldValues.name : '' %>" placeholder="Rockstar Games ..." required />
+      <input 
+        type="text" 
+        id="category-name" 
+        name="categoryName" 
+        value="<%= locals.fieldValues ? fieldValues.name : '' %>" 
+        placeholder="Action..."
+        required
+        class="<%= locals.errors && errors.categoryName ? 'error' : ''; %>"
+      />
     </p>
     <p>
       <label for="category-icon-url">Category Icon Url: </label>
       <% if (locals.errors && erros.categoryIconUrl) { %>
         <label for="category-icon-url"><%= errors.categoryIconUrl %></label>
       <% };%>
-      <input type="text" id="category-icon-url" name="categoryIconUrl" value="<%= locals.fieldValues ? fieldValues.icon_url : '' %>" placeholder="https://imghost.com/icon.png ..." />
+      <input
+        type="text" 
+        id="category-icon-url" 
+        name="categoryIconUrl" 
+        value="<%= locals.fieldValues ? fieldValues.icon_url : '' %>" 
+        placeholder="https://imghost.com/icon.png ..." 
+        class="<%= locals.errors && errors.categoryName ? 'error' : ''; %>"
+      />
     </p>
-    <button type="submit"><%= locals.fieldValues ? "Done" : "Add Category"%></button>
+    <button class="form__btn-submit" type="submit"><%= locals.fieldValues ? "Done" : "Add Category"%></button>
   </form>
 </section>

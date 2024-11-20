@@ -1,9 +1,10 @@
-<section>
-  <h2><%= title %></h2>
+<section class="add-developer">
+  <h2 class="add-developer__title"><%= title %></h2>
 
   <form id="new-developer-form"
     action="<%= locals.developer ? `/developer/edit/${developer.id}` : '/new/developer' %>"
     method="POST"
+    class="form"
   >
     <p>
       <label for="developer-name">Developer Name: </label>
@@ -17,6 +18,7 @@
         placeholder="Rockstar Games ..." 
         value="<%= locals.developer && developer.name ? developer.name : '' %>"
         required 
+        class="<%= locals.errors && errors.developerName ? 'error' : ''; %>"
       />
     </p>
     <p>
@@ -30,6 +32,7 @@
         name="developerLogoUrl" 
         placeholder="https://imghost.com/dev-logo.jpg ..." 
         value="<%= locals.developer && developer.logo_url ? developer.logo_url : '' %>"
+        class="<%= locals.errors && errors.developerLogoUrl ? 'error' : ''; %>"
       />
     </p>
     <p>
@@ -42,7 +45,9 @@
         id="developer-coverimg-url" 
         name="developerCoverImgUrl" 
         value="<%= locals.developer && developer.coverimg_url ? developer.coverimg_url : '' %>"
-        placeholder="https://imghost.com/dev-cover.jpg ...">
+        placeholder="https://imghost.com/dev-cover.jpg ..."
+        class="<%= locals.errors && errors.developerCoverImgUrl ? 'error' : ''; %>"
+      />
     </p>
     <p>
       <label for="developer-details">Details: </label>
@@ -53,8 +58,9 @@
         id="developer-details"
         name="developerDetails"
         placeholder="We are the best AAA game developer in the world! ..."
+        class="<%= locals.errors && errors.developerDetails ? 'error' : ''; %>"
       ><%= locals.developer && developer.details ? developer.details : '' %></textarea>
     </p>
-    <button type="submit"><%= locals.developer ? "Done" : "Add Developer" %></button>
+    <button type="submit" class="form__btn-submit"><%= locals.developer ? "Done" : "Add Developer" %></button>
   </form>
 </section>

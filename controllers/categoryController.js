@@ -4,6 +4,19 @@ const parseValidationErrors = require("../utils/parseValidationErrors");
 const asyncHandler = require("express-async-handler");
 const CustomBadRequestError = require("../errors/CustomBadRequestError.js");
 const CustomNotFoundError = require("../errors/CustomNotFoundError.js");
+const isValidUrl = require("../utils/isValidUrl.js");
+
+const validateIconUrl = (url) => {
+  // since icon url is optional,
+  //we want to ignore testing url when it is empty/not provied by the user
+  if (!url) return true;
+
+  if (!isValidUrl(url)) {
+    throw new Error("Invalid icon url");
+  }
+
+  return true;
+};
 
 const validateFormFields = [
   body("categoryName")
@@ -15,13 +28,15 @@ const validateFormFields = [
     .optional()
     .trim()
     .isLength({ max: 255 })
-    .withMessage("Icon url must be between 1 and 255 characters."),
+    .withMessage("Icon url must be between 1 and 255 characters.")
+    .custom(validateIconUrl),
 ];
 
 const getViewData = async (category = {}) => ({
   title: "Edit Category",
   mainView: "addCategory",
   fieldValues: category,
+  styles: "add-category",
 });
 
 exports.GET = asyncHandler(async (req, res) => {
@@ -37,27 +52,16 @@ exports.GET = asyncHandler(async (req, res) => {
   });
 });
 
-exports.deletePOST = asyncHandler(async (req, res) => {
-  const categoryId = req.params.id;
-  const category = await categories.getCategory(categoryId);
-
-  if (!category) {
-    throw new CustomBadRequestError(`Invalid category ID: ${categoryId}`);
-  }
-
-  await categories.delete(categoryId);
-  res.redirect("/");
-});
-
 exports.editGET = asyncHandler(async (req, res) => {
   const categoryId = req.params.id;
   const category = await categories.getCategory(categoryId);
+  console.log(category);
 
   if (!category) {
     throw new CustomNotFoundError("Category not found.");
   }
 
-  res.render("root", await getViewData(req.params.id));
+  res.render("root", await getViewData(category));
 });
 
 exports.editPOST = [
@@ -87,3 +91,15 @@ exports.editPOST = [
     res.redirect("/");
   }),
 ];
+
+exports.deletePOST = asyncHandler(async (req, res) => {
+  const categoryId = req.params.id;
+  const category = await categories.getCategory(categoryId);
+
+  if (!category) {
+    throw new CustomBadRequestError(`Invalid category ID: ${categoryId}`);
+  }
+
+  await categories.delete(categoryId);
+  res.redirect("/");
+});

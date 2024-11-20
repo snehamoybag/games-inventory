@@ -1,0 +1,7 @@
+@import "./partials/form.css";
+
+.add-game__title {
+  font-size: var(--fs-600);
+  padding: 1em;
+  border: 1px solid var(--clr-neutral-600);
+}

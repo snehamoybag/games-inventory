@@ -2,11 +2,24 @@ const { body, validationResult } = require("express-validator");
 const { developers } = require("../db/queries");
 const parseValidationErrors = require("../utils/parseValidationErrors");
 const asyncHandler = require("express-async-handler");
+const isValidUrl = require("../utils/isValidUrl");
 
 const validateDeveloperName = async (value) => {
   if (await developers.isNameTaken(value)) {
     return Promise.reject("Developer already exists, please enter a new one.");
   }
+};
+
+const validateImgUrl = (url) => {
+  // since dev logo and cover image are optional,
+  //we want to ignore testing url when it is empty/not provied by the user
+  if (!url) return true;
+
+  if (!isValidUrl(url)) {
+    throw new Error("Invalid image url");
+  }
+
+  return true;
 };
 
 const validateFormFileds = [
@@ -20,13 +33,15 @@ const validateFormFileds = [
     .trim()
     .optional()
     .isLength({ max: 255 })
-    .withMessage("Logo url must be between 1 and 255 characters."),
+    .withMessage("Logo url must be between 1 and 255 characters.")
+    .custom(validateImgUrl),
 
   body("developerCoverImgUrl")
     .optional()
     .trim()
     .isLength({ max: 255 })
-    .withMessage("Cover image url must be between 1 and 255 charactes."),
+    .withMessage("Cover image url must be between 1 and 255 charactes.")
+    .custom(validateImgUrl),
 
   body("developerDetails")
     .optional()
@@ -38,6 +53,7 @@ const validateFormFileds = [
 const viewData = {
   title: "Resgister New Developer",
   mainView: "addDeveloper",
+  styles: "add-developer",
 };
 
 exports.GET = asyncHandler((req, res) => {

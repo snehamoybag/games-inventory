@@ -1,9 +1,10 @@
-<section>
-  <h2>Add New Game</h2>
+<section class="add-game">
+  <h2 class="add-game__title">Add New Game</h2>
   <form 
     id="new-game-form"
+    class="form"
     method="POST"
-    action=<%=locals.fieldValues ? `/game/edit/${fieldValues.game.id}` : "/new/game" %> 
+    action="<%= locals.fieldValues ? `/game/edit/${fieldValues.game.id}` : '/new/game' %>" 
   >
     <p>
       <label for="game-name">Name: </label>
@@ -17,6 +18,7 @@
         placeholder="Grand Theft Auto VI ..."
         required
         value="<%= locals.fieldValues ? fieldValues.game.name : "" %>"
+        class="<%= locals.errors && errors.gameName ? 'error' : ''; %>"
       />
     </p>
     <p>
@@ -31,6 +33,7 @@
         placeholder="https://imghost.com/game-logo.jpg ..." 
         required 
         value="<%= locals.fieldValues ? fieldValues.game.logo_url : "" %>"
+        class="<%= locals.errors && errors.gameLogoUrl ? 'error' : ''; %>"
       />
     </p>
     <p>
@@ -43,6 +46,8 @@
         name="gameCoverImgUrl"
         placeholder="https://imghost.com/game-cover.jpg ..."
         value="<%= locals.fieldValues ? fieldValues.game.coverimg_url : "" %>"
+        class="<%= locals.errors && errors.gameCoverImgUrl ? 'error' : ''; %>"
+        required
       />
     </p>
     <p>
@@ -50,9 +55,14 @@
       <% if (locals.errors && errors.gameDevelopers) { %>
         <label for="game-developers" class="error-msg">Error: <%= errors.gameDevelopers %></label>
       <% }; %>
-      <select id="game-developers" name="gameDevelopers" multiple required>
+      <select id="game-developers"
+        name="gameDevelopers"
+        multiple
+        required
+        class="<%= locals.errors && errors.gameDevelopers ? 'error' : ''; %>"
+      >
         <% if (locals.developers && developers.length > 0) { %>
-          <option value="" disabled>-- You can choose multiple --</option>
+          <option value="" disabled>-- 'CTRL/CMD + Click' to select multiple --</option>
           <hr />
           <% developers.forEach((developer) => { %>
             <option 
@@ -74,9 +84,14 @@
       <% if (locals.errors && errors.gameCategories) { %>
         <label for="game-categories" class="error-msg">Error: <%= errors.gameCategories %></label>
       <% }; %>
-      <select id="game-categories" name="gameCategories" multiple required>
+      <select id="game-categories"
+        name="gameCategories"
+        multiple
+        required
+        class="<%= locals.errors && errors.gameCategories ? 'error' : ''; %>"
+      >
         <% if (locals.categories && categories.length > 0) { %>
-          <option value="" disabled>-- You can choose multiple --</option>
+          <option value="" disabled>-- 'CTRL/CMD + Click' to select multiple --</option>
           <hr />
           <% categories.forEach((category) => { %>
             <option 
@@ -106,8 +121,13 @@
         id="game-details"
         name="gameDetails"
         placeholder="This game is awesome ..."
+        rows="7"
+        cols="15"
         required
-      ><%= locals.fieldValues ? fieldValues.game.details : "" %></textarea>
+        class="<%= locals.errors && errors.gameDetails ? 'error' : ''; %>"
+      >
+        <%= locals.fieldValues ? fieldValues.game.details : "" %>
+      </textarea>
     </p>
     <p>
       <label for="game-price">Price (Dollars USA): </label>
@@ -120,8 +140,10 @@
         name="gamePrice"
         placeholder="3.99"
         value="<%= locals.fieldValues ? fieldValues.game.price : "" %>"
-        required />
+        class="<%= locals.errors && errors.gamePrice ? 'error' : ''; %>"
+        required 
+      />
     </p>
-    <button type="submit"><%= locals.fieldValues ? "Done" : "Add Game"%></button>
+    <button class="form__btn-submit" type="submit"><%= locals.fieldValues ? "Done" : "Add Game"%></button>
   </form>
 </section>
