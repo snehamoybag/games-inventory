@@ -1,11 +1,32 @@
-<section>
-  <div class="developer-controlls">
-    <a href="/developer/edit/<%= developer.id %>">Edit</a>
-    <form action="/developer/delete/<%=developer.id %>" method="POST">
-      <button type="submit">Delete</button>
-    </form>
+<section class="developer">
+  <div class="developer__coverimg-wrapper">
+    <img 
+      src="<%= developer.coverimg_url ? developer.coverimg_url : '/assets/images/placeholder-cover-img.jpg' %>"
+      alt="cover image of <%= developer.name %>" 
+      class="developer__coverimg"
+    />
   </div>
   <div class="developer__header">
-    <h2><%= developer.name %></h2>
+    <img src="<%= developer.logo %>" alt="logo of <%= developer.name %>" class="developer__logo">
+    <h2 class="developer__title"><%= developer.name %></h2>
+  </div>
+  <div class="developer__body">
+    <% if (developer.details) { %>
+      <p class="developer__details"><%= developer.details %></p>
+    <% }; %>
+  </div>
+    <div class="developer__controlls">
+      <a href="/developer/edit/<%= developer.id %>" class="btn btn--edit" title="Edit game">
+        <span class="sr-only">Edit Game</span>
+      </a>
+      <form action="/developer/delete/<%= developer.id %>" method="POST">
+        <button type="submit" class="btn btn--delete" title="Delete game">
+          <span class="sr-only">Delete Game</span>
+        </button>
+      </form>
+    </div>
+  <div class="games-container">
+    <h3 class="games-container__title">Games by <%= developer.name %></h3>
+    <%- include("./partials/games.ejs") %>
   </div>
 </section>

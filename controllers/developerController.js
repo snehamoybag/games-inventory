@@ -53,16 +53,21 @@ const getEditFormViewData = async (developer = {}) => ({
 });
 
 exports.GET = asyncHandler(async (req, res) => {
-  const developer = await developers.getDeveloper(req.params.id);
+  const developerId = req.params.id;
+  const developer = await developers.getDeveloper(developerId);
 
   if (!developer) {
-    throw CustomNotFoundError("Developer not found.");
+    throw new CustomNotFoundError("Developer not found.");
   }
+
+  const gamesByDeveloper = await games.getByDeveloper(developerId);
 
   res.render("root", {
     title: `Developer: ${developer.name}`,
     mainView: "developer",
     developer: developer,
+    games: gamesByDeveloper,
+    styles: "developer",
   });
 });
 
@@ -128,7 +133,7 @@ exports.deletePOST = asyncHandler(async (req, res) => {
     throw new CustomBadRequestError(`Invalid developer ID: ${developerId}`);
   }
 
-  const gamesByDeveloper = await games.getByDeveloper(developer);
+  const gamesByDeveloper = await games.getByDeveloper(developerId);
 
   if (gamesByDeveloper.length) {
     throw new CustomBadRequestError(

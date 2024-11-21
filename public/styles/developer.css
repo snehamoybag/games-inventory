@@ -1,20 +1,22 @@
-.game {
+@import "./partials/games.css";
+
+.developer {
   position: relative;
 }
 
-.game__header,
-.game__body {
+.developer__header,
+.developer__body {
   max-width: 60rem;
   margin-left: auto;
   margin-right: auto;
 }
 
-.game__coverimg-wrapper {
+.developer__coverimg-wrapper {
   position: relative;
   z-index: -1;
 }
 
-.game__coverimg-wrapper::after {
+.developer__coverimg-wrapper::after {
   content: "";
   width: 100%;
   height: 100%;
@@ -24,57 +26,45 @@
   left: 0;
 }
 
-.game__coverimg {
-  aspect-ratio: 16/9;
+.developer__coverimg {
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   object-position: center;
 }
 
-.game__header {
+.developer__header {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   padding: 2em;
-  margin-top: -35%;
+  margin-top: -50%;
   position: relative;
   isolation: isolate;
 }
 
-.game__logo {
+.developer__logo {
   width: 6.25rem;
+  aspect-ratio: 1/1;
   object-fit: cover;
   object-position: center;
   box-shadow: 5px 5px 10px hsla(0, 0%, 0%, 0.5);
 }
 
-.game__title {
-  font-size: var(--fs-600);
+.developer__title {
+  font-size: var(--fs-700);
   line-height: 1.2;
-}
-
-.game__title,
-.game__price {
   text-shadow: 2px 5px 5px hsla(0, 0%, 0%, 1);
 }
 
-.game__price {
-  font-family: var(--ff-title);
-  font-size: var(--fs-200);
-  margin-top: 0.5rem;
-  text-decoration: underline;
-  text-decoration-color: var(--clr-accent-400);
-  text-underline-offset: 0.25em;
-}
-
-.game__body {
+.developer__body {
   padding: 0 1em;
 }
 
-.game__body > * + * {
+.developer__body > * + * {
   margin-top: 1rem;
 }
 
-.game__controlls {
+.developer__controlls {
   display: flex;
   justify-content: end;
   align-items: center;
@@ -85,23 +75,19 @@
   right: 0;
 }
 
-.game__controlls .btn--edit,
-.game__controlls .btn--delete {
+.developer__controlls .btn--edit,
+.developer__controlls .btn--delete {
   font-size: 1.5rem;
+}
+
+.developer .games-container {
+  margin-top: 2rem;
 }
 
 /* screens */
 
 @media (min-width: 40em) {
-  .game__logo {
-    width: 10rem;
-  }
-
-  .game__title {
-    font-size: var(--fs-700);
-  }
-
-  .game__body {
+  .developer__body {
     font-size: var(--fs-600);
   }
 }
