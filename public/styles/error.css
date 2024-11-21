@@ -1,0 +1,79 @@
+:root {
+  --clr-neutral-700: hsl(0, 0%, 0%);
+  --clr-neutral-600: hsl(0, 0%, 10%);
+  --clr-neutral-200: hsl(0, 0%, 90%);
+  --clr-neutral-100: hsl(0, 0%, 100%);
+
+  --clr-accent-400: hsl(0, 100%, 50%);
+
+  --ff-title: "Poppins", sans-serif;
+  --ff-paragraph: "Crimson Text", serif;
+
+  --fs-700: 2.5rem;
+  --fs-400: 1rem;
+
+  --fw-black: 900;
+  --fw-bold: 700;
+  --fw-regular: 400;
+}
+
+body {
+  font-family: var(--ff-paragraph);
+  font-size: var(--fs-400);
+  color: var(--clr-neutral-200);
+  background-color: var(--clr-neutral-700);
+}
+
+.error {
+  padding: 2em;
+  display: grid;
+  justify-items: center;
+}
+
+.error > * {
+  margin: 0;
+  padding: 0;
+}
+
+.error__img {
+  width: 15rem;
+}
+
+.error__title {
+  font-family: "Poppins", sans-serif;
+  font-size: var(--fs-700);
+  font-weight: var(--fw-bold);
+  color: hsl(0%, 100%, 100%);
+  margin-top: 2rem;
+}
+
+.error__btn-return {
+  padding: 0.5em 1em;
+  font-family: var(--ff-title);
+  font-weight: var(--fw-bold);
+  text-decoration: none;
+  color: var(--clr-neutral-100);
+  background-color: var(--clr-accent-400);
+  box-shadow: 5px 5px 10px hsla(0, 0%, 0%, 0.5);
+  margin-top: 2rem;
+  transition: all 200ms ease-in;
+}
+
+.error__btn-return:hover {
+  cursor: pointer;
+  color: var(--clr-accent-400);
+  background-color: var(--clr-neutral-100);
+}
+
+.error__btn-return:active {
+  box-shadow: none;
+  transform: scale(0.97);
+}
+
+/* screens */
+@media (min-width: 40em) {
+  :root {
+    --fs-700: 3rem;
+    --fs-400: 1.25rem;
+  }
+}

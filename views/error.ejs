@@ -4,12 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= name %></title>
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Poppins:wght@600;700;900&display=swap" rel="stylesheet">
+
+    <!-- css -->
+    <link rel="stylesheet" href="/styles/error.css">
   </head>
   <body>
-    <main>
-      <h1><%= statusCode %></h1>
-      <p><%= name %>: <%= message %></p>
-      <a href="/">Return to Homepage</a>
+    <main class="error">
+      <img 
+      <% if (statusCode >= 400 && statusCode < 500) { %>
+        src="/assets/images/404-robot.png"
+      <% } else if (statusCode >= 500) { %>
+        src="/assets/images/broken-robot.png"
+      <% }; %>
+        alt="error: <%= message %>" 
+        class="error__img">
+      <h1 class="error__title"><%= statusCode %></h1>
+      <p class="error__details"><%= name %>: <%= message %></p>
+      <a href="/" class="error__btn-return">Go to Homepage</a>
     </main>
   </body>
 </html>
