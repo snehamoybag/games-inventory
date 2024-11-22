@@ -94,6 +94,10 @@ a {
   line-height: 1.1;
 }
 
+.sidebar {
+  outline: 1px solid var(--clr-neutral-600);
+}
+
 .sidebar a {
   color: var(--clr-neutral-200);
   text-decoration: none;
@@ -238,8 +242,7 @@ footer {
       "sidebar main main main main"
       "footer footer footer footer footer";
     max-width: 100rem;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
   }
 
   header {

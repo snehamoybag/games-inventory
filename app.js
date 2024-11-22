@@ -6,6 +6,8 @@ const newRouter = require("./routes/newRouter");
 const categoryRouter = require("./routes/categoryRouter");
 const gameRouter = require("./routes/gameRouter");
 const developerRouter = require("./routes/developerRouter");
+const developerslistRouter = require("./routes/developersListRouter");
+
 const { categories } = require("./db/queries");
 
 const app = express();
@@ -32,6 +34,7 @@ app.use("/new", newRouter);
 app.use("/category", categoryRouter);
 app.use("/game", gameRouter);
 app.use("/developer", developerRouter);
+app.use("/developers-list", developerslistRouter);
 
 // error handler
 app.use((err, req, res, next) => {

@@ -1,0 +1,22 @@
+.developers__list {
+  list-style-position: inside;
+}
+
+.developers__list > li {
+  padding: 1em;
+  border: 1px solid var(--clr-neutral-600);
+}
+
+.developers__list > li:nth-child(even) {
+  background-color: var(--clr-neutral-600);
+}
+
+.developers__list > li > a {
+  margin-left: 0.25rem;
+}
+
+.developers__title {
+  font-size: var(--fs-600);
+  text-transform: uppercase;
+  padding: 1em 2em;
+}
