@@ -94,6 +94,16 @@ a {
   line-height: 1.1;
 }
 
+.header__title > a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 200ms ease;
+}
+
+.header__title > a:hover {
+  color: var(--clr-accent-400);
+}
+
 .sidebar {
   outline: 1px solid var(--clr-neutral-600);
 }
