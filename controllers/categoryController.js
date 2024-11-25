@@ -42,13 +42,32 @@ const getViewData = async (category = {}) => ({
 exports.GET = asyncHandler(async (req, res) => {
   const categoryId = req.params.id;
   const category = await categories.getCategory(categoryId);
-  const categoryGames = await games.getByCategory(categoryId);
+  const currentPage = Number(req.query.page) || 1;
+  const limitPerPage = 30;
+  const offset = (currentPage - 1) * limitPerPage;
+  const totalNumberOfPages = Math.ceil(
+    (await games.countInCategory(categoryId)) / limitPerPage,
+  );
+
+  if (currentPage < 1 || currentPage > totalNumberOfPages) {
+    throw new CustomNotFoundError("invalid page number");
+  }
+
+  const categoryGames = await games.getByCategory(
+    categoryId,
+    limitPerPage,
+    offset,
+  );
 
   res.render("root", {
     title: `${category.name} Games`,
     games: categoryGames,
     mainView: "category",
     styles: "category",
+    pagination: {
+      currentPage: currentPage,
+      lastPage: totalNumberOfPages,
+    },
   });
 });
 

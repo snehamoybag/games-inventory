@@ -1,24 +1,47 @@
 const pool = require("./pool");
 
 class Games {
+  async countAll() {
+    const { rows } = await pool.query("SELECT COUNT(id) from games;");
+    return Number(rows[0].count);
+  }
+
+  async countInCategory(categoryId) {
+    const query =
+      "SELECT COUNT(id) FROM games_categories WHERE category_id = $1";
+    const { rows } = await pool.query(query, [Number(categoryId)]);
+    return Number(rows[0].count);
+  }
+
   async getGame(gameId) {
     const query = "SELECT * FROM games WHERE id = $1";
     const { rows } = await pool.query(query, [Number(gameId)]);
     return rows[0];
   }
 
-  async getAll() {
-    const { rows } = await pool.query("SELECT * FROM games ORDER BY id DESC");
+  async getGames(limit, offset) {
+    const query = `
+      SELECT * FROM games 
+      ORDER BY id DESC 
+      LIMIT $1 OFFSET $2
+    `;
+
+    const { rows } = await pool.query(query, [Number(limit), Number(offset)]);
     return rows;
   }
 
-  async getByCategory(categoryId) {
+  async getByCategory(categoryId, limit, offset) {
     const query = `SELECT games.* FROM games 
       INNER JOIN games_categories 
       ON games_categories.category_id = $1
-      WHERE games.id = games_categories.game_id`;
+      WHERE games.id = games_categories.game_id
+      LIMIT $2 OFFSET $3`;
 
-    const { rows } = await pool.query(query, [Number(categoryId)]);
+    const { rows } = await pool.query(query, [
+      Number(categoryId),
+      Number(limit),
+      Number(offset),
+    ]);
     return rows;
   }
 
