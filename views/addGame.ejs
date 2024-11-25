@@ -16,9 +16,9 @@
         id="game-name"
         name="gameName"
         placeholder="Grand Theft Auto VI ..."
-        required
-        value="<%= locals.fieldValues ? fieldValues.game.name : "" %>"
+        value="<%= locals.fieldValues ? fieldValues.game.name : ''; %>"
         class="<%= locals.errors && errors.gameName ? 'error' : ''; %>"
+        required
       />
     </p>
     <p>
@@ -31,9 +31,9 @@
         id="game-logo-url"
         name="gameLogoUrl" 
         placeholder="https://imghost.com/game-logo.jpg ..." 
-        required 
-        value="<%= locals.fieldValues ? fieldValues.game.logo_url : "" %>"
+        value="<%= locals.fieldValues ? fieldValues.game.logo_url : ''; %>"
         class="<%= locals.errors && errors.gameLogoUrl ? 'error' : ''; %>"
+        required 
       />
     </p>
     <p>
@@ -45,7 +45,7 @@
         id="game-coverimg-url"
         name="gameCoverImgUrl"
         placeholder="https://imghost.com/game-cover.jpg ..."
-        value="<%= locals.fieldValues ? fieldValues.game.coverimg_url : "" %>"
+        value="<%= locals.fieldValues ? fieldValues.game.coverimg_url : ''; %>"
         class="<%= locals.errors && errors.gameCoverImgUrl ? 'error' : ''; %>"
         required
       />
@@ -57,13 +57,12 @@
       <% }; %>
       <select id="game-developers"
         name="gameDevelopers"
+        class="<%= locals.errors && errors.gameDevelopers ? 'error' : ''; %>"
         multiple
         required
-        class="<%= locals.errors && errors.gameDevelopers ? 'error' : ''; %>"
       >
         <% if (locals.developers && developers.length > 0) { %>
           <option value="" disabled>-- 'CTRL/CMD + Click' to select multiple --</option>
-          <hr />
           <% developers.forEach((developer) => { %>
             <option 
               value="<%= developer.id %>"
@@ -86,13 +85,12 @@
       <% }; %>
       <select id="game-categories"
         name="gameCategories"
+        class="<%= locals.errors && errors.gameCategories ? 'error' : ''; %>"
         multiple
         required
-        class="<%= locals.errors && errors.gameCategories ? 'error' : ''; %>"
       >
         <% if (locals.categories && categories.length > 0) { %>
           <option value="" disabled>-- 'CTRL/CMD + Click' to select multiple --</option>
-          <hr />
           <% categories.forEach((category) => { %>
             <option 
               value="<%= category.id %>"
@@ -123,8 +121,8 @@
         placeholder="This game is awesome ..."
         rows="7"
         cols="15"
-        required
         class="<%= locals.errors && errors.gameDetails ? 'error' : ''; %>"
+        required
       >
         <%= locals.fieldValues ? fieldValues.game.details : "" %>
       </textarea>
@@ -135,11 +133,11 @@
         <label for="game-price" class="error-msg">Error: <%= errors.gamePrice %></label>
       <% }; %>
       <input 
-        type="text"
+        type="number"
         id="game-price"
         name="gamePrice"
         placeholder="3.99"
-        value="<%= locals.fieldValues ? fieldValues.game.price : "" %>"
+        value="<%= locals.fieldValues ? fieldValues.game.price : ''; %>"
         class="<%= locals.errors && errors.gamePrice ? 'error' : ''; %>"
         required 
       />
