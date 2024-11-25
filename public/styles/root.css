@@ -97,7 +97,7 @@ a {
 .header__title > a {
   text-decoration: none;
   color: inherit;
-  transition: color 200ms ease;
+  transition: color 100ms ease-in;
 }
 
 .header__title > a:hover {
@@ -111,6 +111,11 @@ a {
 .sidebar a {
   color: var(--clr-neutral-200);
   text-decoration: none;
+  transition: color 100ms ease-in;
+}
+
+.sidebar a:hover {
+  color: var(--clr-accent-400);
 }
 
 .sidebar__section-header {
