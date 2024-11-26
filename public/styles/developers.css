@@ -14,9 +14,3 @@
 .developers__list > li > a {
   margin-left: 0.25rem;
 }
-
-.developers__title {
-  font-size: var(--fs-600);
-  text-transform: uppercase;
-  padding: 1em 2em;
-}

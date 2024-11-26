@@ -53,17 +53,29 @@ exports.GET = asyncHandler(async (req, res) => {
     throw new CustomNotFoundError("invalid page number");
   }
 
-  const categoryGames = await games.getByCategory(
-    categoryId,
-    limitPerPage,
-    offset,
-  );
+  const searchQuery = req.query.gameSearch;
+  const categoryGames = searchQuery
+    ? await games.searchGamesInCategory(
+        categoryId,
+        searchQuery,
+        limitPerPage,
+        offset,
+      )
+    : await games.getByCategory(categoryId, limitPerPage, offset);
 
   res.render("root", {
     title: `${category.name} Games`,
+    gamesContainerTitle: `${category.name} Games`,
+    searchQuery: searchQuery || null,
     games: categoryGames,
     mainView: "category",
     styles: "category",
+    search: {
+      label: `Search ${category.name} Games`,
+      inputId: "search-games",
+      inputName: "gameSearch",
+      inputValue: searchQuery,
+    },
     pagination: {
       currentPage: currentPage,
       lastPage: totalNumberOfPages,

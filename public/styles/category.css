@@ -1,2 +1,3 @@
-@import "./partials/games.css";
+@import "./partials/games-container.css";
+@import "./partials/searchbar.css";
 @import "./partials/pagination.css";

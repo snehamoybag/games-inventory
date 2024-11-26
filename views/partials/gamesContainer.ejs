@@ -1,3 +1,19 @@
+<section class="games-container">
+  <%- include("./searchbar.ejs") %>
+  <h2 class="title title--primary"><%= gamesContainerTitle %></h2>
+
+  <% if (searchQuery) { %>
+    <p class="games-container__paragraph">
+    <% if (games) { %>
+      Results for the search <span class="games-container__paragraph-quote">'<%= searchQuery %>'</span>
+    <% } else { %>
+      No results found for the search <span class="games-container__paragraph-quote">'<%= searchQuery %>'</span>
+    <% }; %>
+    </p>
+  <% }; %>
+
+<!-- games -->
+
 <% if (games.length) { %>
   <div class="games">
     <% games.forEach((game) => { %>
@@ -19,3 +35,7 @@
     <p class="no-game-post__details"><a href="/new/game">Click here</a> to add a new game.</p>
   </div>
 <% }; %>
+
+  <!-- pagination -->
+  <%- include("./pagination.ejs") %>
+</section>

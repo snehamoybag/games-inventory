@@ -1,0 +1,17 @@
+<% if (locals.search) { %>
+  <form action="" class="searchbar" method="GET">
+    <p>
+    <label for="<%= search.inputId %>" class="searchbar__label"><span class="sr-only"><%= search.label %></span></label>
+    <input 
+      type="search"
+      class="searchbar__input"
+      id="<%= search.inputId %>"
+      name="<%= search.inputName %>"
+      value="<%= search.inputValue ? search.inputValue : '' %>"
+      placeholder="<%= search.label %>"
+      required
+    />
+    </p>
+    <button type="submit" class="searchbar__btn">Go</button>
+  </form>
+<% }; %>

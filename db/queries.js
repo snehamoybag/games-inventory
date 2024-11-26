@@ -30,6 +30,16 @@ class Games {
     return rows;
   }
 
+  async searchGames(searchValue, limit, offset) {
+    const query = "SELECT * FROM games WHERE name ILIKE $1 LIMIT $2 OFFSET $3";
+    const { rows } = await pool.query(query, [
+      `%${searchValue}%`,
+      Number(limit),
+      Number(offset),
+    ]);
+    return rows;
+  }
+
   async getByCategory(categoryId, limit, offset) {
     const query = `SELECT games.* FROM games 
       INNER JOIN games_categories 
@@ -42,6 +52,25 @@ class Games {
       Number(limit),
       Number(offset),
     ]);
+    return rows;
+  }
+
+  async searchGamesInCategory(categoryId, searchValue, limit, offset) {
+    const query = `
+    SELECT games.* FROM games 
+    INNER JOIN games_categories 
+    ON games_categories.category_id = $1
+    WHERE games.name ILIKE $2
+    LIMIT $3 OFFSET $4;
+  `;
+
+    const { rows } = await pool.query(query, [
+      Number(categoryId),
+      `%${searchValue}%`,
+      Number(limit),
+      Number(offset),
+    ]);
+
     return rows;
   }
 

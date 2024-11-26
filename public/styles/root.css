@@ -63,15 +63,6 @@ body {
   color: var(--clr-neutral-200);
 }
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--ff-title);
-  font-weight: var(--fw-bold);
-  color: var(--clr-neutral-100);
-}
-
 a {
   color: var(--clr-accent-400);
   text-underline-offset: 0.2em;
@@ -89,10 +80,12 @@ a {
 }
 
 .header__title {
+  font-family: var(--ff-title);
   font-size: var(--fs-900);
   font-weight: var(--fw-black);
   text-transform: uppercase;
   line-height: 1.1;
+  color: var(--clr-neutral-100);
 }
 
 .header__title > a {
@@ -161,6 +154,19 @@ footer {
 }
 
 /* UTILITY CLASSES */
+.title {
+  font-family: var(--ff-title);
+  font-weight: var(--fw-bold);
+  color: var(--clr-neutral-100);
+}
+
+.title--primary {
+  font-size: var(--fs-600);
+  text-transform: uppercase;
+  padding: 1em;
+  margin-top: 1rem;
+}
+
 .btn {
   display: inline-block;
   background: transparent;
