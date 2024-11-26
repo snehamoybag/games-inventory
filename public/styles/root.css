@@ -257,30 +257,13 @@ footer {
 /* screens */
 @media (min-width: 65em) {
   body {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-areas:
-      "header header header header header"
-      "sidebar main main main main"
-      "footer footer footer footer footer";
     max-width: 100rem;
     margin: 0 auto;
   }
 
-  header {
-    grid-area: header;
-  }
-
-  .sidebar {
-    grid-area: sidebar;
-  }
-
-  main {
-    grid-area: main;
-  }
-
-  footer {
-    grid-area: footer;
+  .nav-main-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
   }
 
   .btn--hamburger {

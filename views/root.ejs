@@ -35,12 +35,14 @@
         </button>
     </header>
 
-    <% if (locals.mainView) { %>
+    <div class="nav-main-wrapper">
       <%- include("./partials/sidebar.ejs") %>
       <main>
-        <%- include(`./${mainView}`) %>
+        <% if (locals.mainView) { %>
+          <%- include(`./${mainView}`) %>
+        <% }; %>
       </main>
-    <% }; %>
+    </div>
 
     <footer>Made by Snehamoy</footer>
   </body>
