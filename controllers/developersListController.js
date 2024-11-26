@@ -6,6 +6,8 @@ exports.GET = asyncHandler(async (req, res) => {
     title: "Developers List",
     mainView: "developersList",
     developers: await developers.getAll(),
+    search: {},
+    pagination: {},
     styles: "developers",
   });
 });

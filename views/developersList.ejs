@@ -1,8 +1,18 @@
 <section class="developers">
   <h2 class="title title--primary"><%= title %></h2>
+  <!-- searchbar -->
+  <% if (locals.search) { %>
+    <%- include("./partials/searchbar.ejs") %>
+  <% }; %>
+
   <ol class="developers__list">
     <% developers.forEach((developer) => { %>
       <li><a href="/developer/<%= developer.id %>"><%= developer.name %></a></li>
     <% }); %>
   </ol>
+
+  <!-- pagination -->
+  <% if  (locals.pagination) { %>
+    <%- include("./partials/pagination.ejs") %>
+  <% }; %>
 </section>

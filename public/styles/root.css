@@ -50,8 +50,7 @@ button {
 
 /* to enable percentage based height */
 html,
-body,
-main {
+body {
   height: 100%;
 }
 
@@ -98,8 +97,13 @@ a {
   color: var(--clr-accent-400);
 }
 
+.nav-main-wrapper {
+  min-height: 100%;
+}
+
 .sidebar {
-  outline: 1px solid var(--clr-neutral-600);
+  border: 1px solid var(--clr-neutral-600);
+  border-bottom: 5px solid var(--clr-accent-400);
 }
 
 .sidebar a {
@@ -264,6 +268,10 @@ footer {
   .nav-main-wrapper {
     display: grid;
     grid-template-columns: 1fr 4fr;
+  }
+
+  .sidebar {
+    border-bottom: none;
   }
 
   .btn--hamburger {
