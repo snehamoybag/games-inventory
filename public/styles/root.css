@@ -50,7 +50,8 @@ button {
 
 /* to enable percentage based height */
 html,
-body {
+body,
+main {
   height: 100%;
 }
 
