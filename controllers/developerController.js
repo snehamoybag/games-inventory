@@ -60,16 +60,19 @@ exports.GET = asyncHandler(async (req, res) => {
     throw new CustomNotFoundError("Developer not found.");
   }
 
-  const currentPage = Number(req.query.page) || 1;
+  const pageQuery = Number(req.query.page);
+  const currentPage = pageQuery || 1;
   const gameLimitPerPage = 6;
   const offset = (currentPage - 1) * gameLimitPerPage;
-  const numberOfPages = Math.ceil(
-    (await games.countByDeveloper(developerId)) / gameLimitPerPage,
-  );
+  const numberOfGamesByDeveloper = await games.countByDeveloper(developerId);
+  const numberOfPages =
+    Math.ceil(numberOfGamesByDeveloper / gameLimitPerPage) || 1;
 
-  if (currentPage < 1 || currentPage > numberOfPages) {
+  if (pageQuery < 1 || pageQuery > numberOfPages) {
     throw new CustomNotFoundError("invalid page number.");
   }
+
+  console.log(currentPage, numberOfPages);
 
   res.render("root", {
     title: `Developer: ${developer.name}`,

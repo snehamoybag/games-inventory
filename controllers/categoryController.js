@@ -42,15 +42,21 @@ const getViewData = async (category = {}) => ({
 exports.GET = asyncHandler(async (req, res) => {
   const categoryId = req.params.id;
   const category = await categories.getCategory(categoryId);
-  const currentPage = Number(req.query.page) || 1;
+
+  if (!category) {
+    throw new CustomNotFoundError("Category not found.");
+  }
+
+  const pageQuery = Number(req.query.page);
+  const currentPage = pageQuery || 1;
   const limitPerPage = 30;
   const offset = (currentPage - 1) * limitPerPage;
-  const totalNumberOfPages = Math.ceil(
-    (await games.countInCategory(categoryId)) / limitPerPage,
-  );
+  const numberOfGamesInCategory = await games.countInCategory(categoryId);
+  const totalNumberOfPages =
+    Math.ceil(numberOfGamesInCategory / limitPerPage) || 1;
 
-  if (currentPage < 1 || currentPage > totalNumberOfPages) {
-    throw new CustomNotFoundError("invalid page number");
+  if (pageQuery < 1 || pageQuery > totalNumberOfPages) {
+    throw new CustomNotFoundError("Invalid page number.");
   }
 
   const searchQuery = req.query.gameSearch;

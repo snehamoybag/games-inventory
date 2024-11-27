@@ -3,13 +3,14 @@ const { games } = require("../db/queries");
 const CustomNotFoundError = require("../errors/CustomNotFoundError.js");
 
 exports.GET = asyncHandler(async (req, res) => {
-  const currentPage = Number(req.query.page) || 1;
+  const pageQuery = Number(req.query.page);
+  const currentPage = pageQuery || 1;
   const limitPerPage = 30;
   const offset = (currentPage - 1) * limitPerPage;
   const totalNumberOfPages = Math.ceil((await games.countAll()) / limitPerPage);
 
-  if (currentPage < 1 || currentPage > totalNumberOfPages) {
-    throw new CustomNotFoundError("invalid page number");
+  if (pageQuery < 1 || pageQuery > totalNumberOfPages) {
+    throw new CustomNotFoundError("Invalid page number.");
   }
 
   const searchQuery = req.query.gameSearch;
