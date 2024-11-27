@@ -1,4 +1,5 @@
-@import "./partials/games.css";
+@import "./partials/pagination.css";
+@import "./partials/games-container.css";
 
 .developer {
   position: relative;

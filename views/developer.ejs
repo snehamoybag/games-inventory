@@ -15,18 +15,15 @@
       <p class="developer__details"><%= developer.details %></p>
     <% }; %>
   </div>
-    <div class="developer__controlls">
-      <a href="/developer/edit/<%= developer.id %>" class="btn btn--edit" title="Edit game">
-        <span class="sr-only">Edit Game</span>
-      </a>
-      <form action="/developer/delete/<%= developer.id %>" method="POST">
-        <button type="submit" class="btn btn--delete" title="Delete game">
-          <span class="sr-only">Delete Game</span>
-        </button>
-      </form>
-    </div>
-  <div class="games-container">
-    <h3 class="games-container__title">Games by <%= developer.name %></h3>
-    <%- include("./partials/games.ejs") %>
+  <div class="developer__controlls">
+    <a href="/developer/edit/<%= developer.id %>" class="btn btn--edit" title="Edit developer">
+      <span class="sr-only">Edit Developer</span>
+    </a>
+    <form action="/developer/delete/<%= developer.id %>" method="POST">
+      <button type="submit" class="btn btn--delete" title="Delete developer">
+        <span class="sr-only">Delete Developer</span>
+      </button>
+    </form>
   </div>
+  <%- include("./partials/gamesContainer.ejs") %>
 </section>

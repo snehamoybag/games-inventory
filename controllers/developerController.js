@@ -60,13 +60,27 @@ exports.GET = asyncHandler(async (req, res) => {
     throw new CustomNotFoundError("Developer not found.");
   }
 
-  const gamesByDeveloper = await games.getByDeveloper(developerId);
+  const currentPage = Number(req.query.page) || 1;
+  const gameLimitPerPage = 6;
+  const offset = (currentPage - 1) * gameLimitPerPage;
+  const numberOfPages = Math.ceil(
+    (await games.countByDeveloper(developerId)) / gameLimitPerPage,
+  );
+
+  if (currentPage < 1 || currentPage > numberOfPages) {
+    throw new CustomNotFoundError("invalid page number.");
+  }
 
   res.render("root", {
     title: `Developer: ${developer.name}`,
+    gamesContainerTitle: `Games by ${developer.name}`,
     mainView: "developer",
     developer: developer,
-    games: gamesByDeveloper,
+    games: await games.getByDeveloper(developerId, gameLimitPerPage, offset),
+    pagination: {
+      currentPage: currentPage,
+      lastPage: numberOfPages,
+    },
     styles: "developer",
   });
 });

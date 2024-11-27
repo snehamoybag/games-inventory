@@ -13,6 +13,13 @@ class Games {
     return Number(rows[0].count);
   }
 
+  async countByDeveloper(developerId) {
+    const query =
+      "SELECT COUNT(id) FROM games_developers WHERE developer_id = $1";
+    const { rows } = await pool.query(query, [Number(developerId)]);
+    return Number(rows[0].count);
+  }
+
   async getGame(gameId) {
     const query = "SELECT * FROM games WHERE id = $1";
     const { rows } = await pool.query(query, [Number(gameId)]);
@@ -74,13 +81,18 @@ class Games {
     return rows;
   }
 
-  async getByDeveloper(developerId) {
+  async getByDeveloper(developerId, limit, offset) {
     const query = `SELECT games.* FROM games 
       INNER JOIN games_developers
       ON games_developers.developer_id = $1
-      WHERE games.id = games_developers.game_id`;
+      WHERE games.id = games_developers.game_id
+      LIMIT $2 OFFSET $3`;
 
-    const { rows } = await pool.query(query, [Number(developerId)]);
+    const { rows } = await pool.query(query, [
+      Number(developerId),
+      Number(limit),
+      Number(offset),
+    ]);
     return rows;
   }
 
