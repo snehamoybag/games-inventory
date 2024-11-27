@@ -1,3 +1,10 @@
+@import "./partials/searchbar.css";
+@import "./partials/pagination.css";
+
+.developers {
+  padding: 2em 1em;
+}
+
 .developers__list {
   list-style-position: inside;
 }

@@ -4,16 +4,6 @@
   margin: 0 auto;
 }
 
-.games-container__paragraph {
-  font-family: var(--ff-title);
-  padding: 1em;
-}
-
-.games-container__paragraph-quote {
-  color: var(--clr-accent-400);
-  margin-left: 0.1em;
-}
-
 .game-post {
   display: flex;
   max-width: 40rem;

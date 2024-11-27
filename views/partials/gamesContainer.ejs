@@ -3,11 +3,11 @@
   <h2 class="title title--primary"><%= gamesContainerTitle %></h2>
 
   <% if (searchQuery) { %>
-    <p class="games-container__paragraph">
-    <% if (games) { %>
-      Results for the search <span class="games-container__paragraph-quote">'<%= searchQuery %>'</span>
+    <p class="searchbar__message">
+    <% if (games.length > 0) { %>
+      Results for the search <span class="searchbar__message-quote">'<%= searchQuery %>'</span>
     <% } else { %>
-      No results found for the search <span class="games-container__paragraph-quote">'<%= searchQuery %>'</span>
+      No results found for the search <span class="searchbar__message-quote">'<%= searchQuery %>'</span>
     <% }; %>
     </p>
   <% }; %>

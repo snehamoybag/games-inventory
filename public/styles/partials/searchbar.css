@@ -42,3 +42,13 @@
   transform: scale(90%);
   transition: none;
 }
+
+.searchbar__message {
+  font-family: var(--ff-title);
+  padding: 1em;
+}
+
+.searchbar__message-quote {
+  color: var(--clr-accent-400);
+  margin-left: 0.1em;
+}

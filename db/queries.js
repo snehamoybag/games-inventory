@@ -204,15 +204,21 @@ class Games {
 }
 
 class Developers {
+  async countAll() {
+    const { rows } = await pool.query("SELECT COUNT(id) FROM developers", []);
+    return Number(rows[0].count);
+  }
+
   async getDeveloper(developerId) {
     const query = "SELECT * FROM developers WHERE id = $1";
     const { rows } = await pool.query(query, [Number(developerId)]);
     return rows[0];
   }
 
-  async getAll() {
+  async getDevelopers(limit, offset) {
     const { rows } = await pool.query(
-      "SELECT * FROM developers ORDER BY name ASC",
+      "SELECT * FROM developers ORDER BY name ASC LIMIT $1 OFFSET $2",
+      [Number(limit), Number(offset)],
     );
 
     return rows;
@@ -232,6 +238,18 @@ class Developers {
    `;
 
     const { rows } = await pool.query(query, [Number(gameId)]);
+    return rows;
+  }
+
+  async searchDevelopers(searchValue, limit, offset) {
+    const query =
+      "SELECT * FROM developers WHERE name ILIKE $1 LIMIT $2 OFFSET $3";
+    const { rows } = await pool.query(query, [
+      `%${searchValue}%`,
+      Number(limit),
+      Number(offset),
+    ]);
+
     return rows;
   }
 

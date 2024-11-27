@@ -1,8 +1,20 @@
 <section class="developers">
-  <h2 class="title title--primary"><%= title %></h2>
   <!-- searchbar -->
   <% if (locals.search) { %>
     <%- include("./partials/searchbar.ejs") %>
+  <% }; %>
+
+  <h2 class="title title--primary"><%= title %></h2>
+
+  <!-- search results message -->
+  <% if (searchQuery) { %>
+    <p class="searchbar__message">
+    <% if (developers.length > 0) { %>
+      Results for the search <span class="searchbar__message-quote">'<%= searchQuery %>'</span>
+    <% } else { %>
+      No results found for the search <span class="searchbar__message-quote">'<%= searchQuery %>'</span>
+    <% }; %>
+    </p>
   <% }; %>
 
   <ol class="developers__list">
