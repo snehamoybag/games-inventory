@@ -1,0 +1,21 @@
+<section>
+  <h2 class="title title--primary">Login</h2>
+  <p>
+    Only an admin can edit or delete contents of this site.
+  </p>
+  <form action="/login/admin" method="POST">
+    <label for="admin-password">Enter admin password:</label>
+    <input 
+      type="text" 
+      name="adminPassword" 
+      id="admin-password" 
+      class="modal__input" 
+      min="8"
+      max="32"
+      required
+      autofocus
+    />
+    <button type="submit" class="btn btn--submit">Confirm</button>
+  </form>
+    <button type="button" class="btn btn--cancel">Cancel</button>
+<section>

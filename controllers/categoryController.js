@@ -92,7 +92,6 @@ exports.GET = asyncHandler(async (req, res) => {
 exports.editGET = asyncHandler(async (req, res) => {
   const categoryId = req.params.id;
   const category = await categories.getCategory(categoryId);
-  console.log(category);
 
   if (!category) {
     throw new CustomNotFoundError("Category not found.");

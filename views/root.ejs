@@ -15,11 +15,15 @@
     <!-- css -->
     <link rel="stylesheet" href="/styles/root.css" />
     <% if (locals.styles) { %>
-    <link rel="stylesheet" href="<%= `/styles/${styles}.css` %>">
+      <link rel="stylesheet" href="<%= `/styles/${styles}.css` %>">
     <% }; %>
 
     <!-- js -->
     <script src="/scripts/root.js" defer></script>
+    <% if (locals.script) { %>
+      <script src="<%= `/scripts/${script}.js` %>" defer></script>
+    <% }; %>
+
   </head>
   <body>
     <header class="header">

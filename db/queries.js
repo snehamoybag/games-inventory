@@ -221,6 +221,13 @@ class Developers {
     return Number(rows[0].count);
   }
 
+  async getAll() {
+    const { rows } = await pool.query(
+      "SELECT * FROM developers ORDER BY name ASC",
+    );
+    return rows;
+  }
+
   async getDeveloper(developerId) {
     const query = "SELECT * FROM developers WHERE id = $1";
     const { rows } = await pool.query(query, [Number(developerId)]);

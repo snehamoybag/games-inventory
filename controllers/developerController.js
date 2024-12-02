@@ -72,8 +72,6 @@ exports.GET = asyncHandler(async (req, res) => {
     throw new CustomNotFoundError("invalid page number.");
   }
 
-  console.log(currentPage, numberOfPages);
-
   res.render("root", {
     title: `Developer: ${developer.name}`,
     gamesContainerTitle: `Games by ${developer.name}`,
