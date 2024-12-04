@@ -153,5 +153,5 @@ exports.deletePOST = asyncHandler(async (req, res) => {
   }
 
   await games.delete(gameId);
-  res.redirect("/");
+  res.redirect("/success/delete/game");
 });

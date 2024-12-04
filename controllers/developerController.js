@@ -157,5 +157,5 @@ exports.deletePOST = asyncHandler(async (req, res) => {
   }
 
   await developers.delete(developerId);
-  res.redirect("/");
+  res.redirect("/success/delete/developer");
 });

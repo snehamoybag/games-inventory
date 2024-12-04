@@ -7,6 +7,7 @@ const categoryRouter = require("./routes/categoryRouter");
 const gameRouter = require("./routes/gameRouter");
 const developerRouter = require("./routes/developerRouter");
 const developerslistRouter = require("./routes/developersListRouter");
+const successRouter = require("./routes/successRouter");
 
 const { categories } = require("./db/queries");
 
@@ -35,6 +36,7 @@ app.use("/category", categoryRouter);
 app.use("/game", gameRouter);
 app.use("/developer", developerRouter);
 app.use("/developers-list", developerslistRouter);
+app.use("/success", successRouter);
 
 // error handler
 app.use((err, req, res, next) => {

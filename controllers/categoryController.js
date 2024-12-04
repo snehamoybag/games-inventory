@@ -136,5 +136,5 @@ exports.deletePOST = asyncHandler(async (req, res) => {
   }
 
   await categories.delete(categoryId);
-  res.redirect("/");
+  res.redirect("/success/delete/category");
 });

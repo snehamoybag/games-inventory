@@ -62,6 +62,6 @@ exports.POST = [
     const { categoryName, categoryIconUrl } = req.body;
 
     await categories.add(categoryName, categoryIconUrl);
-    res.redirect("/");
+    res.redirect("/success/add/category");
   }),
 ];
