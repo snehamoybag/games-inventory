@@ -32,7 +32,7 @@ exports.GET = asyncHandler(async (req, res) => {
     },
     pagination: {
       currentPage: currentPage,
-      lastPage: totalNumberOfPages,
+      lastPage: totalNumberOfPages || 1,
     },
   });
 });

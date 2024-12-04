@@ -52,8 +52,7 @@ exports.GET = asyncHandler(async (req, res) => {
   const limitPerPage = 30;
   const offset = (currentPage - 1) * limitPerPage;
   const numberOfGamesInCategory = await games.countInCategory(categoryId);
-  const totalNumberOfPages =
-    Math.ceil(numberOfGamesInCategory / limitPerPage) || 1;
+  const totalNumberOfPages = Math.ceil(numberOfGamesInCategory / limitPerPage);
 
   if (pageQuery < 1 || pageQuery > totalNumberOfPages) {
     throw new CustomNotFoundError("Invalid page number.");
@@ -84,7 +83,7 @@ exports.GET = asyncHandler(async (req, res) => {
     },
     pagination: {
       currentPage: currentPage,
-      lastPage: totalNumberOfPages,
+      lastPage: totalNumberOfPages || 1,
     },
   });
 });

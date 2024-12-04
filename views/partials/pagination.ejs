@@ -39,7 +39,7 @@
       class="pagination__link pagination__link--last"
       rel="last"
       title="last"
-      <% if (pagination.currentPage === pagination.lastPage) { %>
+      <% if (pagination.currentPage === pagination.lastPage || pagination.lastPage === 0) { %>
         disabled
       <% }; %>
     >
