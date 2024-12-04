@@ -148,7 +148,7 @@ exports.deletePOST = asyncHandler(async (req, res) => {
     throw new CustomBadRequestError(`Invalid developer ID: ${developerId}`);
   }
 
-  const gamesByDeveloper = await games.getByDeveloper(developerId);
+  const gamesByDeveloper = await games.getByDeveloper(developerId, 1, 0);
 
   if (gamesByDeveloper.length) {
     throw new CustomBadRequestError(
