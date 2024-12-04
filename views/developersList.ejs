@@ -17,11 +17,19 @@
     </p>
   <% }; %>
 
-  <ol class="developers__list">
-    <% developers.forEach((developer) => { %>
-      <li><a href="/developer/<%= developer.id %>"><%= developer.name %></a></li>
-    <% }); %>
-  </ol>
+  <% if (developers.length) { %>
+    <ol class="developers__list">
+      <% developers.forEach((developer) => { %>
+        <li><a href="/developer/<%= developer.id %>"><%= developer.name %></a></li>
+      <% }); %>
+    </ol>
+  <% } else { %>
+    <p>No developers Found!</p>
+    <p>
+      Register a new one <a href="/new/developer">here</a>.
+    </p>
+  <% }; %>
+
 
   <!-- pagination -->
   <% if  (locals.pagination) { %>

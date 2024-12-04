@@ -3,12 +3,13 @@ const { developers } = require("../db/queries");
 const CustomNotFoundError = require("../errors/CustomNotFoundError");
 
 exports.GET = asyncHandler(async (req, res) => {
-  const currentPage = Number(req.query.page) || 1;
+  const pageQuery = Number(req.query.page);
+  const currentPage = pageQuery || 1;
   const limitPerPage = 50;
   const offset = (currentPage - 1) * limitPerPage;
   const numberOfPages = Math.ceil((await developers.countAll()) / limitPerPage);
 
-  if (currentPage < 1 || currentPage > numberOfPages) {
+  if (pageQuery < 1 || pageQuery > numberOfPages) {
     throw new CustomNotFoundError("Invalid page number.");
   }
 
@@ -29,7 +30,7 @@ exports.GET = asyncHandler(async (req, res) => {
     },
     pagination: {
       currentPage: currentPage,
-      lastPage: numberOfPages,
+      lastPage: numberOfPages || 1,
     },
     styles: "developers",
   });
