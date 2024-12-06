@@ -253,7 +253,8 @@ class Developers {
     const query = `
      SELECT developers.* FROM developers 
      INNER JOIN games_developers ON developers.id = games_developers.developer_id
-     WHERE games_developers.game_id = $1;
+     WHERE games_developers.game_id = $1
+     ORDER BY name ASC;
    `;
 
     const { rows } = await pool.query(query, [Number(gameId)]);
@@ -285,11 +286,11 @@ class Developers {
     return rows.length > 0;
   }
 
-  async add(name, details, logoUrl, coverImgUrl) {
+  async add(name, details, logoUrl, coverimgUrl) {
     const query = `INSERT INTO developers (name, details, logo_url, coverimg_url) 
       VALUES ($1, $2, $3, $4)`;
 
-    await pool.query(query, [name, details, logoUrl, coverImgUrl]);
+    await pool.query(query, [name, details, logoUrl, coverimgUrl]);
   }
 
   async edit(id, name, logoUrl, coverImgUrl, details) {
@@ -335,7 +336,8 @@ class Categories {
     const query = `
      SELECT categories.* FROM categories 
      INNER JOIN games_categories ON categories.id = games_categories.category_id
-     WHERE games_categories.game_id = $1;
+     WHERE games_categories.game_id = $1
+     ORDER BY name ASC;
    `;
 
     const { rows } = await pool.query(query, [gameId]);

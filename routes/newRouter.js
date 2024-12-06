@@ -1,17 +1,17 @@
 const { Router } = require("express");
-const newGameController = require("../controllers/newGameController");
-const newDeveloperController = require("../controllers/newDeveloperController");
-const newCategoryController = require("../controllers/newCategoryController");
+const gameFormController = require("../controllers/gameFromController");
+const developerFormController = require("../controllers/developerFormController");
+const categoryFormController = require("../controllers/categoryFormController");
 
 const router = new Router();
 
-router.get("/game", newGameController.GET);
-router.post("/game", newGameController.POST);
+router.get("/game", gameFormController.newGET);
+router.post("/game", gameFormController.newPOST);
 
-router.get("/developer", newDeveloperController.GET);
-router.post("/developer", newDeveloperController.POST);
+router.get("/developer", developerFormController.newGET);
+router.post("/developer", developerFormController.newPOST);
 
-router.get("/category", newCategoryController.GET);
-router.post("/category", newCategoryController.POST);
+router.get("/category", categoryFormController.newGET);
+router.post("/category", categoryFormController.newPOST);
 
 module.exports = router;

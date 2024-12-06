@@ -2,7 +2,7 @@
   <h2 class="add-category__title"><%= title %></h2>
 
   <form id="new-category-form" 
-    action="<%=locals.fieldValues ? `/category/edit/${fieldValues.id}` : '/new/category' %>"
+    action="<%=locals.isEditMode ? `/edit/category/${fieldValues.categoryId}` : '/new/category' %>"
     method="POST"
     class="form"
   >
@@ -15,7 +15,7 @@
         type="text" 
         id="category-name" 
         name="categoryName" 
-        value="<%= locals.fieldValues ? fieldValues.name : '' %>" 
+        value="<%= locals.fieldValues ? fieldValues.categoryName : '' %>" 
         placeholder="Action..."
         required
         class="<%= locals.errors && errors.categoryName ? 'error' : ''; %>"
@@ -30,13 +30,13 @@
         type="text" 
         id="category-icon-url" 
         name="categoryIconUrl" 
-        value="<%= locals.fieldValues ? fieldValues.icon_url : '' %>" 
+        value="<%= locals.fieldValues ? fieldValues.categoryIconUrl : '' %>" 
         placeholder="https://imghost.com/icon.png ..." 
         class="<%= locals.errors && errors.categoryIconUrl ? 'error' : ''; %>"
       />
     </p>
     <button class="form__btn-submit" type="submit">
-      <%= locals.fieldValues ? "Done" : "Add Category"%>
+      <%= locals.isEditMode ? "Done" : "Add Category"%>
     </button>
   </form>
 </section>

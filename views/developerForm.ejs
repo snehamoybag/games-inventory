@@ -2,21 +2,21 @@
   <h2 class="add-developer__title"><%= title %></h2>
 
   <form id="new-developer-form"
-    action="<%= locals.developer ? `/developer/edit/${developer.id}` : '/new/developer' %>"
+    action="<%= locals.isEditMode ? `/edit/developer/${fieldValues.developerId}` : '/new/developer' %>"
     method="POST"
     class="form"
   >
     <p>
       <label for="developer-name">Developer Name: </label>
       <% if (locals.errors && errors.developerName) { %>
-        <label for="developer-name"><%= errors.developerName %></label>
+        <label for="developer-name" class="error-msg"><%= errors.developerName %></label>
       <% };%>
       <input 
         type="text" 
         id="devevloper-name"
         name="developerName" 
         placeholder="Rockstar Games ..." 
-        value="<%= locals.developer && developer.name ? developer.name : '' %>"
+        value="<%= locals.fieldValues && fieldValues.developerName ? fieldValues.developerName : '' %>"
         required 
         class="<%= locals.errors && errors.developerName ? 'error' : ''; %>"
       />
@@ -24,43 +24,43 @@
     <p>
       <label for="developer-logo-url">Logo Url: </label>
       <% if (locals.errors && errors.developerLogoUrl) { %>
-        <label for="developer-logo-url"><%= errors.developerLogoUrl %></label>
+        <label for="developer-logo-url" class="error-msg"><%= errors.developerLogoUrl %></label>
       <% };%>
       <input 
         type="text" 
         id="developer-logo-url" 
         name="developerLogoUrl" 
         placeholder="https://imghost.com/dev-logo.jpg ..." 
-        value="<%= locals.developer && developer.logo_url ? developer.logo_url : '' %>"
+        value="<%= locals.fieldValues && fieldValues.developerLogoUrl ? fieldValues.developerLogoUrl : '' %>"
         class="<%= locals.errors && errors.developerLogoUrl ? 'error' : ''; %>"
       />
     </p>
     <p>
       <label for="developer-coverimg-url">Cover Image Url</label>
-      <% if (locals.errors && errors.developerCoverImgUrl) { %>
-        <label for="developer-coverimg-url"><%= errors.developerCoverImgUrl %></label>
+      <% if (locals.errors && errors.developerCoverimgUrl) { %>
+        <label for="developer-coverimg-url" class="error-msg"><%= errors.developerCoverimgUrl %></label>
       <% };%>
       <input 
         type="text" 
         id="developer-coverimg-url" 
-        name="developerCoverImgUrl" 
-        value="<%= locals.developer && developer.coverimg_url ? developer.coverimg_url : '' %>"
+        name="developerCoverimgUrl" 
+        value="<%= locals.fieldValues && fieldValues.developerCoverimgUrl ? fieldValues.developerCoverimgUrl : '' %>"
         placeholder="https://imghost.com/dev-cover.jpg ..."
-        class="<%= locals.errors && errors.developerCoverImgUrl ? 'error' : ''; %>"
+        class="<%= locals.errors && errors.developerCoverimgUrl ? 'error' : ''; %>"
       />
     </p>
     <p>
       <label for="developer-details">Details: </label>
       <% if (locals.errors && errors.developerDetails) { %>
-        <label for="developer-details"><%= errors.developerDetails %></label>
+        <label for="developer-details" class="error-msg"><%= errors.developerDetails %></label>
       <% };%>
       <textarea 
         id="developer-details"
         name="developerDetails"
         placeholder="We are the best AAA game developer in the world! ..."
         class="<%= locals.errors && errors.developerDetails ? 'error' : ''; %>"
-      ><%= locals.developer && developer.details ? developer.details : '' %></textarea>
+      ><%= locals.fieldValues && fieldValues.developerDetails ? fieldValues.developerDetails : '' %></textarea>
     </p>
-    <button type="submit" class="form__btn-submit"><%= locals.developer ? "Done" : "Add Developer" %></button>
+    <button type="submit" class="form__btn-submit"><%= locals.isEditMode ? "Done" : "Add Developer" %></button>
   </form>
 </section>

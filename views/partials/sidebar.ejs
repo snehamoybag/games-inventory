@@ -18,10 +18,10 @@
                 <a href="/category/<%= category.id %>"><%= category.name %></a>
             </div>
             <div class="controlls-wrapper">
-              <a class="btn btn--edit" href="/category/edit/<%= category.id %>" title="edit">
+              <a class="btn btn--edit" href="/edit/category/<%= category.id %>" title="edit">
                 <span class="sr-only">Edit</span>
               </a>
-              <form action="/category/delete/<%= category.id %>" method="POST">
+              <form action="/delete/category/<%= category.id %>" method="POST">
                 <button 
                   type="submit" 
                   class="btn btn--delete"

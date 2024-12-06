@@ -3,6 +3,8 @@ const express = require("express");
 
 const indexRouter = require("./routes/indexRouter");
 const newRouter = require("./routes/newRouter");
+const editRouter = require("./routes/editRouter");
+const deleteRouter = require("./routes/deleteRouter");
 const categoryRouter = require("./routes/categoryRouter");
 const gameRouter = require("./routes/gameRouter");
 const developerRouter = require("./routes/developerRouter");
@@ -32,6 +34,8 @@ app.use(async (req, res, next) => {
 // routes
 app.use("/", indexRouter);
 app.use("/new", newRouter);
+app.use("/edit", editRouter);
+app.use("/delete", deleteRouter);
 app.use("/category", categoryRouter);
 app.use("/game", gameRouter);
 app.use("/developer", developerRouter);

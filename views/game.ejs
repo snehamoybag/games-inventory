@@ -28,10 +28,10 @@
       </p>
     </div>
     <div class="game__controlls">
-      <a href="/game/edit/<%= game.id %>" class="btn btn--edit" title="Edit game">
+      <a href="/edit/game/<%= game.id %>" class="btn btn--edit" title="Edit game">
         <span class="sr-only">Edit Game</span>
       </a>
-      <form action="/game/delete/<%= game.id %>" method="POST">
+      <form action="/delete/game/<%= game.id %>" method="POST">
         <button 
           type="submit" 
           class="btn btn--delete" 

@@ -5,10 +5,12 @@ const getViewData = (title, message) => ({
   styles: "success",
 });
 
+const getAddViewData = (message) => getViewData("Added Successfully!", message);
+const getEditViewData = (message) =>
+  getViewData("Edited Successfully!", message);
+
 const getDeleteViewData = (message) =>
   getViewData("Deleted Successfully!", message);
-
-const getAddViewData = (message) => getViewData("Added Successfully!", message);
 
 exports.deleteGameGET = (req, res) => {
   res.render(
@@ -26,6 +28,10 @@ exports.deleteDeveloperGET = (req, res) => {
 
 exports.addCategoryGET = (req, res) => {
   res.render("root", getAddViewData("Category added successfully."));
+};
+
+exports.editCategoryGET = (req, res) => {
+  res.render("root", getEditViewData("Category has been edited successfully."));
 };
 
 exports.deleteCategoryGET = (req, res) => {

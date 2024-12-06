@@ -8,6 +8,7 @@ router.get("/delete/game", successController.deleteGameGET);
 router.get("/delete/developer", successController.deleteDeveloperGET);
 
 router.get("/add/category", successController.addCategoryGET);
+router.get("/edit/category", successController.editCategoryGET);
 router.get("/delete/category", successController.deleteCategoryGET);
 
 module.exports = router;

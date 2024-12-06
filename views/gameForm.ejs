@@ -1,10 +1,10 @@
 <section class="add-game">
-  <h2 class="add-game__title">Add New Game</h2>
+  <h2 class="add-game__title"><%= title %></h2>
   <form 
     id="new-game-form"
     class="form"
     method="POST"
-    action="<%= locals.fieldValues ? `/game/edit/${fieldValues.game.id}` : '/new/game' %>" 
+    action="<%= locals.isEditMode ? `/edit/game/${fieldValues.gameId}` : '/new/game' %>" 
   >
     <p>
       <label for="game-name">Name: </label>
@@ -16,7 +16,7 @@
         id="game-name"
         name="gameName"
         placeholder="Grand Theft Auto VI ..."
-        value="<%= locals.fieldValues ? fieldValues.game.name : ''; %>"
+        value="<%= locals.fieldValues ? fieldValues.gameName : ''; %>"
         class="<%= locals.errors && errors.gameName ? 'error' : ''; %>"
         required
       />
@@ -31,7 +31,7 @@
         id="game-logo-url"
         name="gameLogoUrl" 
         placeholder="https://imghost.com/game-logo.jpg ..." 
-        value="<%= locals.fieldValues ? fieldValues.game.logo_url : ''; %>"
+        value="<%= locals.fieldValues ? fieldValues.gameLogoUrl : ''; %>"
         class="<%= locals.errors && errors.gameLogoUrl ? 'error' : ''; %>"
         required 
       />
@@ -45,12 +45,12 @@
         id="game-coverimg-url"
         name="gameCoverImgUrl"
         placeholder="https://imghost.com/game-cover.jpg ..."
-        value="<%= locals.fieldValues ? fieldValues.game.coverimg_url : ''; %>"
+        value="<%= locals.fieldValues ? fieldValues.gameCoverImgUrl : ''; %>"
         class="<%= locals.errors && errors.gameCoverImgUrl ? 'error' : ''; %>"
         required
       />
     </p>
-    <p id="developers-input-wrapper">
+    <p>
       <label for="game-developers">Developers : (Can't find one? Register a new one <a href="/new/developer">here.</a>)</label>
       <% if (locals.errors && errors.gameDevelopers) { %>
         <label for="game-developers" class="error-msg">Error: <%= errors.gameDevelopers %></label>
@@ -61,20 +61,23 @@
         multiple
         required
       >
-        <% if (locals.developers && developers.length > 0) { %>
+        <% if (locals.developers && developers.length) { %>
           <option value="" disabled>-- 'CTRL/CMD + Click' to select multiple --</option>
           <% developers.forEach((developer) => { %>
             <option 
               value="<%= developer.id %>"
-              <% if (locals.fieldValues && fieldValues.selectedDevelopers.find((prevDev) => prevDev.id === developer.id)) { %>
+              <% if (
+                  locals.fieldValues && 
+                  fieldValues.gameDevelopers.find((selectedDevId) => Number(selectedDevId) === developer.id)
+               ) { %>
                 selected
-              <% };%>
+              <% }; %>
             >
               <%= developer.name %>
             </option>
           <% }); %>
         <% } else { %>
-          <option value="" disabled>no developer found</option>
+          <option value="" disabled>No developer found</option>
         <% }; %>
       </select>
     </p>
@@ -89,12 +92,15 @@
         multiple
         required
       >
-        <% if (locals.categories && categories.length > 0) { %>
+        <% if (locals.categories && categories.length) { %>
           <option value="" disabled>-- 'CTRL/CMD + Click' to select multiple --</option>
           <% categories.forEach((category) => { %>
             <option 
               value="<%= category.id %>"
-              <% if (locals.fieldValues && fieldValues.selectedCategories.find((prevCategory) => prevCategory.id === category.id)) { %>
+              <% if (
+                locals.fieldValues && 
+                fieldValues.gameCategories.find((selectedCategoryId) => Number(selectedCategoryId) === category.id)
+              ) { %>
                 selected
               <% };%>
             >
@@ -102,7 +108,7 @@
             </option>
           <% }); %>
         <% } else { %>
-          <option value="" disabled>no category found</option>
+          <option value="" disabled>No category found</option>
         <% }; %>
       </select>
     </p>
@@ -123,7 +129,7 @@
         cols="15"
         class="<%= locals.errors && errors.gameDetails ? 'error' : ''; %>"
         required
-      ><%= locals.fieldValues ? fieldValues.game.details : "" %></textarea>
+      ><%= locals.fieldValues ? fieldValues.gameDetails : "" %></textarea>
     </p>
     <p>
       <label for="game-price">Price (Dollars USA): </label>
@@ -136,11 +142,11 @@
         id="game-price"
         name="gamePrice"
         placeholder="3.99"
-        value="<%= locals.fieldValues ? fieldValues.game.price : ''; %>"
+        value="<%= locals.fieldValues ? fieldValues.gamePrice : ''; %>"
         class="<%= locals.errors && errors.gamePrice ? 'error' : ''; %>"
         required 
       />
     </p>
-    <button class="form__btn-submit" type="submit"><%= locals.fieldValues ? "Done" : "Add Game"%></button>
+    <button class="form__btn-submit" type="submit"><%= isEditMode ? "Done" : "Add Game"%></button>
   </form>
 </section>

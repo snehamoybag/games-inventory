@@ -16,10 +16,10 @@
     <% }; %>
   </div>
   <div class="developer__controlls">
-    <a href="/developer/edit/<%= developer.id %>" class="btn btn--edit" title="Edit developer">
+    <a href="/edit/developer/<%= developer.id %>" class="btn btn--edit" title="Edit developer">
       <span class="sr-only">Edit Developer</span>
     </a>
-    <form action="/developer/delete/<%= developer.id %>" method="POST">
+    <form action="/delete/developer/<%= developer.id %>" method="POST">
       <button 
         type="submit" 
         class="btn btn--delete" 
