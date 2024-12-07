@@ -138,7 +138,7 @@ exports.editPOST = [
       const { categoryName, categoryIconUrl } = req.body;
 
       await categories.edit(categoryId, categoryName, categoryIconUrl);
-      res.redirect("/success/edit/category");
+      res.redirect(`/success/edit/category/${categoryId}`);
       return;
     }
 

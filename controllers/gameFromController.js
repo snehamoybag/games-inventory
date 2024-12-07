@@ -130,7 +130,7 @@ exports.newPOST = [
         [...gameCategories],
       );
 
-      res.redirect("/");
+      res.redirect("/success/add/game");
       return;
     }
 
@@ -223,7 +223,7 @@ exports.editPOST = [
         gameCategories,
       );
 
-      res.redirect(`/game/${gameId}`);
+      res.redirect(`/success/edit/game/${gameId}`);
       return;
     }
 

@@ -103,7 +103,7 @@ exports.newPOST = [
 
       const developer = await developers.getByName(developerName);
 
-      res.redirect(`/developer/${developer.id}`);
+      res.redirect("/success/add/developer");
       return;
     }
 
@@ -178,7 +178,7 @@ exports.editPOST = [
         developerDetails,
       );
 
-      res.redirect(`/developer/${req.params.id}`);
+      res.redirect(`/success/edit/developer/${req.params.id}`);
       return;
     }
 
