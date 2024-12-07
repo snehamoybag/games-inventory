@@ -49,6 +49,8 @@
 }
 
 .game__title {
+  font-family: var(--ff-title);
+  font-weight: var(--fw-bold);
   font-size: var(--fs-600);
   line-height: 1.2;
 }
