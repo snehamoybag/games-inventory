@@ -81,16 +81,18 @@
   display: flex;
   justify-content: end;
   align-items: center;
-  gap: 1rem;
-  padding: 1em;
+  gap: 0.5rem;
+  padding: 0.5em 1.25em;
+  background-color: var(--clr-neutral-600);
+  border-radius: 100vh;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 1rem;
+  right: 1rem;
 }
 
 .game__controlls .btn--edit,
 .game__controlls .btn--delete {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 
 /* screens */
@@ -106,5 +108,10 @@
 
   .game__body {
     font-size: var(--fs-600);
+  }
+
+  .game__controlls .btn--edit,
+  .game__controlls .btn--delete {
+    font-size: 1.5rem;
   }
 }
