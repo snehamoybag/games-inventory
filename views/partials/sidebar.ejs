@@ -1,15 +1,26 @@
 <nav id="sidebar" role="navigation" aria-label="Navigation sidebar" class="sidebar hidden">
   <ul class="sidebar__list">
-    <li class="sidebar__list-item"><a href="/new/game">Add New Game</a></li>
-    <li class="sidebar__list-item"><a href="/new/developer">Register A New Developer</a></li>
+    <% if (locals.isAdmin) { %>
+      <li class="sidebar__list-item"><a href="/new/game">Add New Game</a></li>
+      <li class="sidebar__list-item"><a href="/new/developer">Register A New Developer</a></li>
+      <li class="sidebar__list-item">
+        <form action="/logout/admin" method="POST" onclick="return confirm('Are you sure you want to logout?')">
+          <button type="submit" class="btn-logout">Logout</button>
+        </form>
+      </li>
+    <% } else { %>
+      <li class="sidebar__list-item"><a href="/login/admin">Login as Admin</a></li>
+    <% }; %>
   </ul>
-  <% if (locals.categories && categories.length > 0) { %>
+  <% if (locals.categories && categories.length) { %>
     <section class="siderbar__section">
       <div class="sidebar__section-header">
         <h2 class="sidebar__section-title">Categories</h2>
-        <a class="btn btn--add" href="/new/category" title="Add new category">
-          <span class="sr-only">Add new category</span>
-        </a>
+        <% if (locals.isAdmin) { %>
+          <a class="btn btn--add" href="/new/category" title="Add new category">
+            <span class="sr-only">Add new category</span>
+          </a>
+        <% }; %>
       </div>
       <ul class="sidebar__list">
         <% categories.forEach((category) => { %>
@@ -17,21 +28,23 @@
             <div class="text-wrapper">
                 <a href="/category/<%= category.id %>"><%= category.name %></a>
             </div>
-            <div class="controlls-wrapper">
-              <a class="btn btn--edit" href="/edit/category/<%= category.id %>" title="edit">
-                <span class="sr-only">Edit</span>
-              </a>
-              <form action="/delete/category/<%= category.id %>" method="POST">
-                <button 
-                  type="submit" 
-                  class="btn btn--delete"
-                  title="delete"
-                  onclick="return confirm('Are you sure you want to delete this category?');"
-                >
-                  <span class="sr-only">Delete</span>
-                </button>
-              </form>
-            </div>
+            <% if (locals.isAdmin) { %>
+              <div class="controlls-wrapper">
+                <a class="btn btn--edit" href="/edit/category/<%= category.id %>" title="edit">
+                  <span class="sr-only">Edit</span>
+                </a>
+                <form action="/delete/category/<%= category.id %>" method="POST">
+                  <button 
+                    type="submit" 
+                    class="btn btn--delete"
+                    title="delete"
+                    onclick="return confirm('Are you sure you want to delete this category?');"
+                  >
+                    <span class="sr-only">Delete</span>
+                  </button>
+                </form>
+              </div>
+            <% }; %>
           </li>
         <% }); %>
       </ul>
@@ -40,9 +53,11 @@
   <section class="sidebar__section">
     <div class="sidebar__section-header">
       <h2 class="sidebar__section-title">Developers</h2>
-      <a class="btn btn--add" href="/new/developer" title="Register new developer">
-        <span class="sr-only">Register new developer</span>
-      </a>
+      <% if (locals.isAdmin) { %>
+        <a class="btn btn--add" href="/new/developer" title="Register new developer">
+          <span class="sr-only">Register new developer</span>
+        </a>
+      <% }; %>
     </div>
     <ul class="sidebar__list">
       <li class="sidebar__list-item"><a href="/developers-list">Developers list</a></li>

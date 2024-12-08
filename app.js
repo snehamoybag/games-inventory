@@ -1,7 +1,10 @@
 const path = require("node:path");
 const express = require("express");
+const cookieParser = require("cookie-parser");
 
 const indexRouter = require("./routes/indexRouter");
+const loginRouter = require("./routes/loginRouter");
+const logoutRouter = require("./routes/logoutRouter");
 const newRouter = require("./routes/newRouter");
 const editRouter = require("./routes/editRouter");
 const deleteRouter = require("./routes/deleteRouter");
@@ -19,6 +22,9 @@ const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+// parse cookies
+app.use(cookieParser("snehamoybag"));
+
 // parse req.body
 app.use(express.urlencoded({ extended: true }));
 
@@ -28,11 +34,14 @@ app.use(express.static("public"));
 // global variables available to views
 app.use(async (req, res, next) => {
   res.locals.categories = await categories.getAll();
+  res.locals.isAdmin = Boolean(req.signedCookies.isAdmin);
   next();
 });
 
 // routes
 app.use("/", indexRouter);
+app.use("/login", loginRouter);
+app.use("/logout", logoutRouter);
 app.use("/new", newRouter);
 app.use("/edit", editRouter);
 app.use("/delete", deleteRouter);

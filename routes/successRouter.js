@@ -3,6 +3,9 @@ const successController = require("../controllers/successController.js");
 
 const router = new Router();
 
+router.get("/login", successController.loginGET);
+router.get("/logout", successController.logoutGET);
+
 router.get("/add/game", successController.addGameGET);
 router.get("/edit/game/:id", successController.editGameGET);
 router.get("/delete/game", successController.deleteGameGET);

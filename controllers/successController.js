@@ -1,3 +1,5 @@
+const CustomAccessDeniedError = require("../errors/CustomAccessDeniedError");
+
 const getViewData = (title, message, link, linkText) => ({
   mainView: "success",
   title,
@@ -15,6 +17,38 @@ const getEditViewData = (message, link, linkText) =>
 
 const getDeleteViewData = (message) =>
   getViewData("Deleted Successfully!", message, "/", "Go to Homepage");
+
+exports.loginGET = (req, res) => {
+  const isAdmin = Boolean(req.signedCookies.isAdmin);
+
+  if (!isAdmin) {
+    throw new CustomAccessDeniedError(
+      "You do not have permission to access this page.",
+    );
+  }
+
+  res.render(
+    "root",
+    getViewData(
+      "Login Successful!",
+      "You are now logged in.",
+      "/",
+      "Go to Homepage",
+    ),
+  );
+};
+
+exports.logoutGET = (req, res) => {
+  res.render(
+    "root",
+    getViewData(
+      "Logout successful!",
+      "You've successfully logged out.",
+      "/",
+      "Go to Homepage",
+    ),
+  );
+};
 
 exports.addGameGET = (req, res) => {
   res.render("root", getAddViewData("Game has been added successfully."));

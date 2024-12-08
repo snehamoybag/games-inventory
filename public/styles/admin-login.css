@@ -1,0 +1,6 @@
+@import "./partials/form.css";
+
+.admin-login__description {
+  padding: 0 2em;
+  max-width: 60ch;
+}

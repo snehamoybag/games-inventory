@@ -1,9 +1,12 @@
 const { Router } = require("express");
+const accessController = require("../controllers/accessController");
 const gameFormController = require("../controllers/gameFromController");
 const developerFormController = require("../controllers/developerFormController");
 const categoryFormController = require("../controllers/categoryFormController");
 
 const router = new Router();
+
+router.all("/*", accessController.ALL);
 
 router.get("/game", gameFormController.newGET);
 router.post("/game", gameFormController.newPOST);

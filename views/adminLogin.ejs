@@ -1,21 +1,31 @@
-<section>
-  <h2 class="title title--primary">Login</h2>
-  <p>
-    Only an admin can edit or delete contents of this site.
-  </p>
-  <form action="/login/admin" method="POST">
-    <label for="admin-password">Enter admin password:</label>
-    <input 
-      type="text" 
-      name="adminPassword" 
-      id="admin-password" 
-      class="modal__input" 
-      min="8"
-      max="32"
-      required
-      autofocus
-    />
-    <button type="submit" class="btn btn--submit">Confirm</button>
-  </form>
-    <button type="button" class="btn btn--cancel">Cancel</button>
+<section class="admin-login">
+  <h2 class="title title--primary"><%= title %></h2>
+  <% if (locals.isAdmin) { %>
+    <p class="admin-login__description">
+      No need, you are already logged in. Do you want to <a href="/logout/admin">logout</a>?
+    </p>
+  <% } else { %>
+    <p class="admin-login__description">
+      Only an admin can modify the contents of this site. Please enter the secret admin password.
+    </p>
+    <form class="form" action="/login/admin" method="POST">
+      <p>
+        <label for="admin-password">Enter Password (between 8 to 32 characters) :</label>
+        <% if (locals.errors && errors.adminPassword) { %>
+          <label for="admin-password" class="error-msg"><%= errors.adminPassword %></label>
+        <% };%>
+        <input 
+          type="password" 
+          name="adminPassword" 
+          id="admin-password" 
+          class="<%= locals.errors && errors.adminPassword ? 'error' : '' %>" 
+          minlength="8"
+          maxlength="32"
+          value="<%= locals.fieldValues && fieldValues.adminPassword ? fieldValues.adminPassword : ''; %>"
+          required
+        />
+      </p>
+      <button type="submit" class="form__btn-submit">Confirm</button>
+    </form>
+  <% }; %>
 <section>

@@ -123,6 +123,11 @@ a {
   padding: 2em;
 }
 
+.sidebar__section-title {
+  font-family: var(--ff-title);
+  color: var(--clr-neutral-100);
+}
+
 .sidebar__section-header > .btn {
   --size: 1.25em;
 }
@@ -145,6 +150,16 @@ a {
   display: flex;
   align-items: center;
   gap: 1em;
+}
+
+.sidebar .btn-logout {
+  border: none;
+  color: var(--clr-neutral-200);
+}
+
+.sidebar .btn-logout:hover {
+  cursor: pointer;
+  color: var(--clr-accent-400);
 }
 
 .sidebar.hidden {
