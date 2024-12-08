@@ -172,6 +172,10 @@ footer {
   border: 1px solid var(--clr-neutral-600);
 }
 
+footer a {
+  text-decoration: none;
+}
+
 /* UTILITY CLASSES */
 .title {
   font-family: var(--ff-title);

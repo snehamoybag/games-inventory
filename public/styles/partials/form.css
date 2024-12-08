@@ -1,6 +1,9 @@
 .form {
-  max-width: 50rem;
   padding: 2em;
+}
+
+.form > * {
+  max-width: 40rem;
 }
 
 .form > * + * {
@@ -80,4 +83,29 @@
 
 .form .error-msg {
   color: var(--clr-accent-400);
+}
+
+@media (min-width: 40em) {
+  .form {
+    position: relative;
+  }
+
+  .form::before {
+    content: "";
+    width: 10%;
+    height: 100%;
+    background-image: url("../../assets/images/endless-constellation.svg");
+    opacity: 0.5;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+  }
+}
+
+@media (min-width: 64em) {
+  .form::before {
+    width: 30%;
+    right: 10%;
+  }
 }
