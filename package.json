@@ -4,7 +4,8 @@
   "description": "Template Repo for Node + Express + Postgres + EJS",
   "main": "index.js",
   "scripts": {
-    "start": "node --watch app.js",
+    "start": "node app.js",
+    "dev": "node --watch app.js",
     "seeddb": "node db/seedDB.js",
     "addgames": "node db/addGames.js",
     "test": "echo \"Error: no test specified\" && exit 1"
