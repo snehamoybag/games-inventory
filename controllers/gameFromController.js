@@ -171,8 +171,6 @@ exports.editGET = asyncHandler(async (req, res) => {
   const gameDevelopers = await developers.getByGame(gameId);
   const gameDeveloperIds = gameDevelopers.map((developer) => developer.id);
 
-  console.log(gameCategories, gameDevelopers);
-
   const filedValues = {
     gameId: game.id,
     gameName: game.name,
