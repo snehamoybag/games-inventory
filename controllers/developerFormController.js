@@ -91,17 +91,15 @@ exports.newPOST = [
         developerName,
         developerDetails,
         developerLogoUrl,
-        developerCoverImgUrl,
+        developerCoverimgUrl,
       } = req.body;
 
       await developers.add(
         developerName,
         developerDetails,
         developerLogoUrl,
-        developerCoverImgUrl,
+        developerCoverimgUrl,
       );
-
-      const developer = await developers.getByName(developerName);
 
       res.redirect("/success/add/developer");
       return;
