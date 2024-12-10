@@ -7,7 +7,9 @@
       <img src="<%= game.logo_url %>" alt="logo of <%= game.name %>" class="game__logo" />
       <div>
         <h2 class="game__title"><%= game.name %></h2>
-        <p class="game__price">Price: $<%= game.price %></p>
+        <p class="game__price">
+          <%= Number(game.price) === 0 ? "Free to Play" : `Price: $${game.price}` %>
+        </p>
       </div>
     </div>
     <div class="game__body">
