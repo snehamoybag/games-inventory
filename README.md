@@ -2,7 +2,7 @@
 
 A simple app to make and manage a list of your favorite games.
 
-Live Preview: https://games-inventory-app.up.railway.app/
+Live Preview: https://games-inventory-app.up.railway.app/ (DEAD! I ran out of free tier credits)
 
 ## Features
 
